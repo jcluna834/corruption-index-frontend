@@ -1,7 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import {ModalDirective} from 'ngx-bootstrap/modal';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { PlagiarismDetectionManagerService } from './../../services/managers/plagiarism-detection.manager';
+import { ModalCreateDocumentComponent } from './../../views/modal-create-document/modal-create-document.component';
+import { DocumentListComponent } from './../../views/document-list/document-list.component';
 
 
 @Component({
@@ -9,6 +12,9 @@ import { PlagiarismDetectionManagerService } from './../../services/managers/pla
   selector: 'dashboard',
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('documentList', { static: false })
+  documentList: DocumentListComponent;
 
   radioModel: string = 'Month';
 
@@ -393,7 +399,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.mainChartData3.push(65);
     }
 
-    this.getDocuments();
     this.getReports();
   }
 
@@ -408,21 +413,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           id: x._id,
           label: x.idTypeDescription,
           value: x.idTypeID,
-          selected: false,
-        }
-      })
-    }
-    console.log(this.reportsItems);
-  }
-
-  async getDocuments(){
-    const lstReports = await this.plagiarismDetectionService.getDocs();
-    if(lstReports){
-      this.docsItems = lstReports.data.data.map(x =>{
-        return{
-          id: x.id,
-          title: x.title,
-          description: x.description,
           selected: false,
         }
       })

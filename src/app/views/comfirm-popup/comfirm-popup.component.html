@@ -1,0 +1,26 @@
+<div>
+  <div class="modal-{{modalType}}" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 *ngIf="title">{{ title }}</h4>
+      </div>
+      <div class="modal-body">
+        <span class="circle-green" *ngIf="icon">
+          <i [ngClass]="icon"></i>
+        </span>
+        <h6 *ngIf="msgConfirm" [innerHTML]="msgConfirm"></h6>
+        <div class="row" [hidden]="!lblWishContinue">
+          <h4 class="lblWishContinue">{{ msgWishContinue }}</h4>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-sm-6 col-md-6" [hidden]="hideCancelButton">
+          <button type="button" class="btn btn-secondary" (click)="cancel()">{{cancelLabel}}</button>
+        </div>
+        <div class="col-sm-6 col-md-6">
+          <button type="button" class="btn btn-info" (click)="confirm()">{{confirmLabel}}</button>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
