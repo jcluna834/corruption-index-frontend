@@ -2,7 +2,16 @@ import { INavData } from '@coreui/angular';
 
 export const navItems: INavData[] = [
   {
-    name: 'Dashboard',
+    title: true,
+    name: 'Menú opciones'
+  },
+  {
+    name: 'Convocatorias',
+    url: '/announcement/list',
+    icon: 'icon-drop'
+  },
+  {
+    name: 'Documentos',
     url: '/dashboard',
     icon: 'icon-speedometer',
     badge: {
@@ -10,16 +19,7 @@ export const navItems: INavData[] = [
       text: 'NEW'
     }
   },
-  {
-    title: true,
-    name: 'Theme'
-  },
-  {
-    name: 'Colors',
-    url: '/theme/colors',
-    icon: 'icon-drop'
-  },
-  {
+  /*{
     name: 'Typography',
     url: '/theme/typography',
     icon: 'icon-pencil'
@@ -247,5 +247,5 @@ export const navItems: INavData[] = [
     icon: 'icon-layers',
     variant: 'danger',
     attributes: { target: '_blank', rel: 'noopener' }
-  }
+  }*/
 ];
