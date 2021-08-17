@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PlagiarismDetectionManagerService } from './../../../services/managers/plagiarism-detection.manager';
 import { ModalCreateAnnouncementComponent } from './../../../views/announcement/modal-create-announcement/modal-create-announcement.component';
+import { Announcement } from './../../../models/announcement';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ComfirmPopupComponent } from '../../comfirm-popup/comfirm-popup.component';
 
 @Component({
   selector: 'app-announcement-list',
@@ -12,7 +15,13 @@ export class AnnouncementListComponent implements OnInit {
   @ViewChild('modalCreateAnnouncement', { static: false })
   modalCreateAnnouncement: ModalCreateAnnouncementComponent;
 
-  constructor(private plagiarismDetectionService: PlagiarismDetectionManagerService) { }
+  public announcement: Announcement;
+  public bsModalRef: BsModalRef;
+
+  constructor(private plagiarismDetectionService: PlagiarismDetectionManagerService,
+    private modalService: BsModalService) {
+    this.announcement = new Announcement();
+   }
 
   public docsItems: any;
 
@@ -38,6 +47,54 @@ export class AnnouncementListComponent implements OnInit {
 
   addAnnouncement(){
     this.modalCreateAnnouncement.showModal();
+  }
+
+  editAnnouncement(selectedItem: any){
+    console.log("enditar");
+    console.log("Selected item Id: ", selectedItem);
+  }
+
+  async deleteAnnouncement(selectedItem: any){
+    this.announcement.id = selectedItem.id;
+    await this.plagiarismDetectionService.deleteAnnouncement(this.announcement).then(response => {
+      if (response) {
+        if (response.success) {
+          this.showModalConfirm("Borrado exitoso", response.message, '', true);
+        }
+        else{
+          this.showModalConfirm("Error al borrar", response.message, "danger");
+        }
+      }
+    }).catch(error => {
+      console.log("fallo");
+      console.log(error);
+    });
+  }
+
+  showModalConfirm(title, msg, modalType='', reload=false) {
+    this.bsModalRef = this.modalService.show(ComfirmPopupComponent, {
+      class: 'modal-auto siigo-popup',
+      ignoreBackdropClick: true,
+      backdrop: 'static',
+    });
+    this.bsModalRef.content.setOption(
+      {
+        title: title,
+        msgConfirm: msg,
+        hideCloseButton: false,
+        hideCancelButton: true,
+        confirmLabel: "Aceptar",
+        modalType: modalType
+      }
+    );
+
+    this.bsModalRef.content.responsePopup.subscribe(
+      (confirm: boolean) => {
+        if (confirm) {
+          if(reload) location.reload();
+        }
+      }
+    );
   }
 
 }

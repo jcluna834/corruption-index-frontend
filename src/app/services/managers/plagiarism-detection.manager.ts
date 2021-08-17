@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GlobalConstants } from '../../common/global-constants';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -50,6 +50,23 @@ export class PlagiarismDetectionManagerService {
   async saveAnnouncement(data: any): Promise<any>{
     try{
       const response: any = await this.httpClient.post(this.UrlPlagiarismDetectionServices + 'announcement', data).toPromise();
+      return response;
+    }
+    catch(error){
+        console.log(error);
+        return;
+    }
+  }
+
+  async deleteAnnouncement(data: any): Promise<any>{
+    try{
+      const options = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
+        body: data.id,
+      };
+      const response: any = await this.httpClient.delete(this.UrlPlagiarismDetectionServices + 'announcement', options).toPromise();
       return response;
     }
     catch(error){

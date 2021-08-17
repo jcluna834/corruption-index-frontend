@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Document } from './../../../models/document';
 import { Announcement } from './../../../models/announcement';
 import { PlagiarismDetectionManagerService } from './../../../services/managers/plagiarism-detection.manager';
 import { GlobalConstants } from '../../../common/global-constants';
@@ -27,7 +26,7 @@ export class ModalCreateAnnouncementComponent implements OnInit {
     private modalService: BsModalService,
   ) {
 
-    this.announcement = new Document();
+    this.announcement = new Announcement();
     this.formAnnouncement = this.fb.group({
       'name': [undefined, [Validators.required]],
       'description': [undefined, [Validators.required]],
@@ -57,7 +56,7 @@ export class ModalCreateAnnouncementComponent implements OnInit {
       this.showModalConfirm("Error en formulario", "faltan campos por llenar o hay errores en los campos", "danger");
       return false;
     }
-    this.setDocument();
+    this.setAnnouncement();
     this.createAnnouncement();
   }
 
@@ -68,7 +67,7 @@ export class ModalCreateAnnouncementComponent implements OnInit {
     return false;
   }
 
-  setDocument() {
+  setAnnouncement() {
     this.announcement.name = this.name.value;
     this.announcement.description = this.description.value;
     this.announcement.startDate = this.startDate.value;
@@ -93,8 +92,8 @@ export class ModalCreateAnnouncementComponent implements OnInit {
       }
     }).catch(error => {
       console.log(error);
-      this.showModalConfirm("Error al guardar", "Hubo un problema al guardar el documento", "danger");
-    })
+      this.showModalConfirm("Error al guardar", "Hubo un problema al guardar la convocatoria", "danger");
+    });
   }
 
   showModalConfirm(title, msg, modalType='') {
