@@ -29,10 +29,9 @@
                     <div class="col-sm-12">
                       <div class="form-group">
                         <label for="announcementCode">Convocatoria</label>
-                        <select class="form-control" id="announcementCode" formControlName="announcementCode" required>
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
+                        <select class="form-control" id="announcementCode" formControlName="announcementCode" placeholder="Select" required>
+                          <option [value]="null" [disabled]="true" >Seleccione una opción</option>
+                          <option [value]="item.id" *ngFor="let item of announcementItems">{{item.name}}</option>
                         </select>
                       </div>
                     </div>

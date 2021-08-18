@@ -1,10 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import {ModalDirective} from 'ngx-bootstrap/modal';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { PlagiarismDetectionManagerService } from './../../services/managers/plagiarism-detection.manager';
-import { ModalCreateDocumentComponent } from './../../views/modal-create-document/modal-create-document.component';
-import { DocumentListComponent } from './../../views/document-list/document-list.component';
+import { DocumentListComponent } from './document-list/document-list.component';
 
 
 @Component({

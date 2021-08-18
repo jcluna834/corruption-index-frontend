@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Document } from './../../models/document';
-import { DocumentManagerService } from './../../services/managers/document.manager';
-import { GlobalConstants } from '../../common/global-constants';
+import { Document } from './../../../models/document';
+import { DocumentManagerService } from './../../../services/managers/document.manager';
+import { PlagiarismDetectionManagerService } from './../../../services/managers/plagiarism-detection.manager';
+import { GlobalConstants } from '../../../common/global-constants';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { ComfirmPopupComponent } from '../comfirm-popup/comfirm-popup.component';
+import { ComfirmPopupComponent } from '../../comfirm-popup/comfirm-popup.component';
 
 @Component({
   selector: 'app-modal-create-document',
@@ -19,11 +20,13 @@ export class ModalCreateDocumentComponent implements OnInit {
   public formDocument: FormGroup;
   public document: Document;
   public bsModalRef: BsModalRef;
+  public announcementItems: any;
 
   constructor(
     private fb: FormBuilder,
     private documentManagerService: DocumentManagerService,
     private modalService: BsModalService,
+    private plagiarismDetectionService: PlagiarismDetectionManagerService,
   ) {
 
     this.document = new Document();
@@ -40,7 +43,8 @@ export class ModalCreateDocumentComponent implements OnInit {
   public get description() { return this.formDocument.get('description'); }
   public get fileInput() { return this.formDocument.get('file-input'); }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.getAnnouncements();
   }
 
   showModal() {
@@ -49,6 +53,22 @@ export class ModalCreateDocumentComponent implements OnInit {
 
   hiddenModal() {
     this.documentModal.hide();
+  }
+
+  async getAnnouncements(){
+    const lstReports = await this.plagiarismDetectionService.getAnnouncement();
+    if(lstReports){
+      this.announcementItems = lstReports.data.data.map(x =>{
+        return{
+          id: x.id,
+          name: x.name,
+          description: x.description,
+          startDate: x.startDate,
+          endDate: x.endDate,
+          selected: false,
+        }
+      })
+    }
   }
 
   saveDocument() {

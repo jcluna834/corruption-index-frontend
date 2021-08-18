@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PlagiarismDetectionManagerService } from './../../services/managers/plagiarism-detection.manager';
-import { ModalCreateDocumentComponent } from './../../views/modal-create-document/modal-create-document.component';
+import { PlagiarismDetectionManagerService } from './../../../services/managers/plagiarism-detection.manager';
+import { ModalCreateDocumentComponent } from './../modal-create-document/modal-create-document.component';
 
 @Component({
   selector: 'app-document-list',

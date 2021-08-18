@@ -8,8 +8,8 @@ import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { CommonModule } from '@angular/common';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { ModalCreateDocumentComponent } from './../modal-create-document/modal-create-document.component';
-import { DocumentListComponent } from './../document-list/document-list.component';
+import { ModalCreateDocumentComponent } from './modal-create-document/modal-create-document.component';
+import { DocumentListComponent } from './document-list/document-list.component';
 
 @NgModule({
   imports: [

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GlobalConstants } from '../../common/global-constants';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,9 +11,21 @@ export class PlagiarismDetectionManagerService {
 
   private UrlPlagiarismDetectionServices: string;
 
+  /*OBSERVADORES*/  
+  private IdAnnouncement = new BehaviorSubject<any>(null);
+  IdAnnouncement$ = this.IdAnnouncement.asObservable();
+  /*END OBSERVADORES*/
+
+
   constructor(private httpClient: HttpClient) { 
       this.UrlPlagiarismDetectionServices = GlobalConstants.apiURLPlagiarismDetection;
   }
+
+   /*OBSERVADORES*/
+  setIdAnnouncement(value:any) {
+    this.IdAnnouncement.next(value);
+  }
+  /*END OBSERVADORES*/
 
   async getReports(): Promise<any>{
     try{
@@ -38,8 +51,9 @@ export class PlagiarismDetectionManagerService {
 
   async getAnnouncement(): Promise<any>{
     try{
-      const announcement: any = await this.httpClient.get(this.UrlPlagiarismDetectionServices+'announcement').toPromise();
-      return announcement
+      const announcements: any = await this.httpClient.get(this.UrlPlagiarismDetectionServices+'announcement').toPromise();
+      this.setIdAnnouncement(announcements);
+      return announcements
     }
     catch(error){
       console.log(error);
@@ -50,6 +64,17 @@ export class PlagiarismDetectionManagerService {
   async saveAnnouncement(data: any): Promise<any>{
     try{
       const response: any = await this.httpClient.post(this.UrlPlagiarismDetectionServices + 'announcement', data).toPromise();
+      return response;
+    }
+    catch(error){
+        console.log(error);
+        return;
+    }
+  }
+
+  async updateAnnouncement(data: any): Promise<any>{
+    try{
+      const response: any = await this.httpClient.put(this.UrlPlagiarismDetectionServices + 'announcement', data).toPromise();
       return response;
     }
     catch(error){

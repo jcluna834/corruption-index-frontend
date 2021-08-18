@@ -46,12 +46,14 @@ export class AnnouncementListComponent implements OnInit {
   }
 
   addAnnouncement(){
-    this.modalCreateAnnouncement.showModal();
+    this.modalCreateAnnouncement.showModalCreate();
   }
 
   editAnnouncement(selectedItem: any){
-    console.log("enditar");
-    console.log("Selected item Id: ", selectedItem);
+    this.announcement = selectedItem;
+    this.modalCreateAnnouncement.announcement = this.announcement;
+    this.modalCreateAnnouncement.setAnnouncementForm();
+    this.modalCreateAnnouncement.showModalEdit();
   }
 
   async deleteAnnouncement(selectedItem: any){
@@ -66,7 +68,6 @@ export class AnnouncementListComponent implements OnInit {
         }
       }
     }).catch(error => {
-      console.log("fallo");
       console.log(error);
     });
   }
