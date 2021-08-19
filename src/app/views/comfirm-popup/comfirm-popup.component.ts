@@ -11,7 +11,7 @@ export class ComfirmPopupComponent implements OnInit {
   public title: string;
   public msgConfirm: string;
   public confirmLabel: string;
-  public cancelLabel: string;
+  public cancelLabel: string = "Cancelar";
   public icon: string;
   public hideCancelButton: boolean = false;
   public hideCloseButton: boolean = false;

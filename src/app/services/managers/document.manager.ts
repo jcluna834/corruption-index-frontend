@@ -31,4 +31,15 @@ export class DocumentManagerService {
         }
     }
 
+    async editDocument(data: any): Promise<any>{
+      try{
+        const response: any = await this.httpClient.put(this.UrlPlagiarismDetectionServices + 'documents', data).toPromise();
+        return response;
+      }
+      catch(error){
+          console.log(error);
+          return;
+      }
+    }
+
 }

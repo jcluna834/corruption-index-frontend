@@ -100,4 +100,18 @@ export class PlagiarismDetectionManagerService {
     }
   }
 
+  async downloadDocument(): Promise<any>{
+    try{
+      const httpOptions = {
+        responseType: 'blob' as 'json'
+      };
+      const reports: any = await this.httpClient.get(this.UrlPlagiarismDetectionServices+'downloadFile/'+'2021-07-29-Carta extensión del programa.pdf', httpOptions).toPromise();
+      return reports
+    }
+    catch(error){
+      console.log(error);
+      return;
+    }
+  }
+
 }

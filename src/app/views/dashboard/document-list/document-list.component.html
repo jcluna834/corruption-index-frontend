@@ -14,33 +14,38 @@
       <thead class="thead-light">
         <tr>
           <th class="text-center"><i class="icon-people"></i></th>
-          <th>Id</th>
-          <th class="text-center">Tittle</th>
-          <th>Authors</th>
-          <th class="text-center">Actions</th>
+          <th>Título</th>
+          <th>Descripción</th>
+          <th>convocatoria</th>
+          <th style="width: 15%;">Opciones</th>
+          <th style="width: 15%;">Análisis</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let row of docsItems">
           <td class="text-center">
             <div class="avatar">
-              <img src="assets/img/avatars/1.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-              <span class="avatar-status badge-success"></span>
+              <img src="assets/img/avatars/1.jpg" class="img-avatar" alt="documento subido">
+              <span class="avatar-status badge-warning"></span>
             </div>
           </td>
-          <td>{{row.id}}</td>
           <td>
             <div>{{row.title}}</div>
             <div class="small text-muted">
               <span>{{row.id}}</span>
             </div>
           </td>
-          <td class="text-center">
-            <i class="fa fa-cc-mastercard" style="font-size:24px"></i>
+          <td>{{row.description}}</td>
+          <td>{{row.announcementName}}</td>
+          <td>
+            <a type="button" class="btn btn-success" title="Descargar" href="{{downloadFIileURL + row.fileName }}" download><span class="icon-cloud-download"></span></a>
+            <button type="button" class="btn btn-info" (click)="editDocument(row)" title="Editar"><span class="icon-pencil"></span></button>
+            <button type="button" class="btn btn-danger" (click)="deleteDocument(row)" title="Eliminar"><span class="icon-trash"></span></button>
           </td>
           <td>
-            <div class="small text-muted">Last login</div>
-            <strong>10 sec ago</strong>
+            <button type="button" class="btn btn-primary" (click)="modalAnalisis(row)" title="Analizar"><span class="icon-list"></span></button>
+            <button type="button" class="btn btn-primary" (click)="deleteDocument(row)" title="Indexar"><span class="icon-book-open"></span></button>
+            <button type="button" class="btn btn-primary" (click)="deleteDocument(row)" title="Ver Análisis"><span class="icon-magnifier"></span></button>
           </td>
         </tr>
       </tbody>

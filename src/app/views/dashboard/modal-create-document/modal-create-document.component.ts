@@ -21,6 +21,8 @@ export class ModalCreateDocumentComponent implements OnInit {
   public document: Document;
   public bsModalRef: BsModalRef;
   public announcementItems: any;
+  public option: string = "Save";
+  public titleModal: string = "Crear una convocatoria";
 
   constructor(
     private fb: FormBuilder,
@@ -47,7 +49,16 @@ export class ModalCreateDocumentComponent implements OnInit {
     this.getAnnouncements();
   }
 
-  showModal() {
+  showModalCreate(){
+    this.option = "Save";
+    this.titleModal = "Crear una convocatoria";
+    this.clearForm();
+    this.documentModal.show();
+  }
+
+  showModalEdit() {
+    this.titleModal = "Editar una convocatoria";
+    this.option = "Update";
     this.documentModal.show();
   }
 
@@ -77,10 +88,16 @@ export class ModalCreateDocumentComponent implements OnInit {
       return false;
     }
     this.setDocument();
-    this.uploadFile();
+    this.createUpdateDocument();
   }
 
   validateForm() {
+    if(this.option == "Update"){
+      this.fileInput.clearValidators();
+    }else{
+      this.fileInput.setValidators([Validators.required]);
+    }
+    this.fileInput.updateValueAndValidity();
     if (this.formDocument.status === "VALID") {
       return true;
     }
@@ -101,7 +118,28 @@ export class ModalCreateDocumentComponent implements OnInit {
     this.document.indexDoc = 0; //Para solo guardar el doc más no indexar
   }
 
-  async uploadFile() {
+  setDocumentForm() {
+    this.title.setValue(this.document.title);
+    this.description.setValue(this.document.description);
+    this.announcementCode.setValue(this.document.announcementCode);
+  }
+
+  clearForm() {
+    this.title.setValue('');
+    this.description.setValue('');
+    this.announcementCode.setValue('');
+    this.fileInput.setValue('');
+  }
+
+  createUpdateDocument(){
+    if(this.option == "Save"){
+      this.createDocument();
+    }else{
+      this.editDocument();
+    }
+  }
+
+  async createDocument() {
     await this.documentManagerService.uploadFile(this.document).then(response => {
       if (response) {
         if (response.status_code === 201) {
@@ -116,6 +154,24 @@ export class ModalCreateDocumentComponent implements OnInit {
     }).catch(error => {
       console.log(error);
       this.showModalConfirm("Error al guardar", "Hubo un problema al guardar el documento", "danger");
+    })
+  }
+
+  async editDocument() {
+    await this.documentManagerService.editDocument(this.document).then(response => {
+      if (response) {
+        if (response.success) {
+          this.showModalConfirm("Edición exitosa", response.message);
+          this.hiddenModal();
+          //location.reload();
+        }
+        else{
+          this.showModalConfirm("Error al editar", response.message, "danger");
+        }
+      }
+    }).catch(error => {
+      console.log(error);
+      this.showModalConfirm("Error al editar", "Hubo un problema al editar el documento", "danger");
     })
   }
 
