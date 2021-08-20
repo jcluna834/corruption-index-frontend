@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -20,6 +21,7 @@ import { DocumentListComponent } from './document-list/document-list.component';
     CommonModule,
     ButtonsModule.forRoot(),
     ModalModule.forRoot(),
+    AlertModule.forRoot(),
     ReactiveFormsModule,
   ],
   declarations: [ DashboardComponent, ModalCreateDocumentComponent, DocumentListComponent ],

@@ -12,6 +12,7 @@ export class Document {
     public announcementCode?: number,
     public fileInput?: FileList,
     public indexDoc?: number,
+    public status?: number,
     
   ) { }
 }

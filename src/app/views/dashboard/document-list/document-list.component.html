@@ -6,7 +6,14 @@
     Documents
   </div>
   <div class="card-body">
-
+    <div *ngIf="analysisHistoryItems?.length > 0">
+      <alert type="info">
+        <h4 class="alert-heading">¡Análisis en proceso!</h4>
+        <div *ngFor="let row of analysisHistoryItems">
+          <p>El documento <strong>{{row.documentName}}</strong> perteneciente a la convocatoria <strong>{{row.announcementName}}</strong> tiene un proceso de validación en curso</p>
+        </div>
+      </alert>
+    </div>
     <div style="padding-bottom: 20px;">
       <button type="button" class="btn btn-info" (click)="addDocumnent()">Subir Documento</button>
     </div>
@@ -25,8 +32,10 @@
         <tr *ngFor="let row of docsItems">
           <td class="text-center">
             <div class="avatar">
-              <img src="assets/img/avatars/1.jpg" class="img-avatar" alt="documento subido">
-              <span class="avatar-status badge-warning"></span>
+              <img src="assets/img/avatars/pdf-icon.ico" class="img-avatar">
+              <span *ngIf="row.status == 0" class="avatar-status badge-warning" title="Documento subido"></span>
+              <span *ngIf="row.status == 1" class="avatar-status badge-info" title="Documento analizado"></span>
+              <span *ngIf="row.status == 2" class="avatar-status badge-success" title="Documento indexado"></span>
             </div>
           </td>
           <td>
@@ -43,9 +52,9 @@
             <button type="button" class="btn btn-danger" (click)="deleteDocument(row)" title="Eliminar"><span class="icon-trash"></span></button>
           </td>
           <td>
-            <button type="button" class="btn btn-primary" (click)="modalAnalisis(row)" title="Analizar"><span class="icon-list"></span></button>
-            <button type="button" class="btn btn-primary" (click)="deleteDocument(row)" title="Indexar"><span class="icon-book-open"></span></button>
-            <button type="button" class="btn btn-primary" (click)="deleteDocument(row)" title="Ver Análisis"><span class="icon-magnifier"></span></button>
+            <button *ngIf="row.status == 0" type="button" class="btn btn-primary" (click)="modalAnalisis(row)" title="Analizar"><span class="icon-list"></span></button>
+            <button *ngIf="row.status != 2" type="button" class="btn btn-primary" (click)="indexDocument(row)" title="Indexar"><span class="icon-book-open"></span></button>
+            <button *ngIf="row.status != 0" type="button" class="btn btn-primary" (click)="deleteDocument(row)" title="Ver Análisis"><span class="icon-magnifier"></span></button>
           </td>
         </tr>
       </tbody>

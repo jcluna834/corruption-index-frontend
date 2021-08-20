@@ -100,17 +100,25 @@ export class PlagiarismDetectionManagerService {
     }
   }
 
-  async downloadDocument(): Promise<any>{
+  async executeSimilarityAnalisis(data: any): Promise<any>{
     try{
-      const httpOptions = {
-        responseType: 'blob' as 'json'
-      };
-      const reports: any = await this.httpClient.get(this.UrlPlagiarismDetectionServices+'downloadFile/'+'2021-07-29-Carta extensión del programa.pdf', httpOptions).toPromise();
-      return reports
+      const response: any = await this.httpClient.post(this.UrlPlagiarismDetectionServices + 'SimulateExecuteSimilarityAnalisis', data).toPromise();
+      return response;
     }
     catch(error){
-      console.log(error);
-      return;
+        console.log(error);
+        return;
+    }
+  }
+
+  async getAnalisisHistory(): Promise<any>{
+    try{
+      const response: any = await this.httpClient.get(this.UrlPlagiarismDetectionServices + 'analysisHistory').toPromise();
+      return response;
+    }
+    catch(error){
+        console.log(error);
+        return;
     }
   }
 

@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PlagiarismDetectionManagerService } from './../../../services/managers/plagiarism-detection.manager';
+import { DocumentManagerService } from './../../../services/managers/document.manager';
 import { ModalCreateDocumentComponent } from './../modal-create-document/modal-create-document.component';
 import { Document } from './../../../models/document';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ComfirmPopupComponent } from '../../comfirm-popup/comfirm-popup.component';
+import { interval, Subscription, timer } from 'rxjs';
+
 
 @Component({
   selector: 'app-document-list',
@@ -15,19 +18,41 @@ export class DocumentListComponent implements OnInit {
   @ViewChild('modalCreateDocument', { static: false })
   modalCreateDocument: ModalCreateDocumentComponent;
 
+  public timerSubscription: Subscription;
+
   public document: Document;
   public bsModalRef: BsModalRef;
   public downloadFIileURL: string = "http://localhost:5000/api/v1/plagiarism/downloadFile/";
 
-  constructor(private plagiarismDetectionService: PlagiarismDetectionManagerService,
+  constructor(
+    private documentManagerService: DocumentManagerService,
+    private plagiarismDetectionService: PlagiarismDetectionManagerService,
     private modalService: BsModalService) {
     this.document = new Document();
    }
 
   public docsItems: any;
+  public analysisHistoryItems: any;
+
+  /*ngOnInit(): void {
+    this.getDocuments();
+    this.getAnalysisHistory();
+  }*/
 
   ngOnInit(): void {
     this.getDocuments();
+    this.getAnalysisHistory();
+    //Cada n tiempo se revisa que no existan documentos en proceso de análisis
+    const source = interval(30000); //30 seconds
+    this.timerSubscription = source.subscribe(val => this.getAnalysisHistory());
+  }
+  
+  ngOnDestroy(): void {
+    this.timerSubscription.unsubscribe();
+  }
+
+  loadData(){
+    console.log("entro");
   }
 
   async getDocuments(){
@@ -41,19 +66,35 @@ export class DocumentListComponent implements OnInit {
           announcementCode: x.announcementCode,
           announcementName: x.announcementName,
           fileName: x.fileName,
+          status: x.status,
           selected: false,
         }
       })
     }
   }
 
+  async getAnalysisHistory(){
+    const lstAnalysisHistory = await this.plagiarismDetectionService.getAnalisisHistory();
+    if(lstAnalysisHistory){
+      this.analysisHistoryItems = lstAnalysisHistory.data.data.map(x =>{
+        return{
+          id: x.documentId,
+          documentId: x.documentCode,
+          collectionId: x.collectionCode,
+          createdDate: x.created_date,
+          documentName: x.title,
+          announcementName: x.announcementName,
+          status: x.status
+        }
+      })
+    }
+  }
+
   addDocumnent(){
-    console.log(this.modalCreateDocument);
     this.modalCreateDocument.showModalCreate();
   }
 
   editDocument(selectedItem: any){
-    console.log("editar");
     this.document = selectedItem;
     this.modalCreateDocument.document = this.document;
     this.modalCreateDocument.setDocumentForm();
@@ -61,10 +102,26 @@ export class DocumentListComponent implements OnInit {
   }
 
   modalAnalisis(selectedItem: any){
-    this.document.id = selectedItem.id;
+    this.document = selectedItem;
     const message = "Está a puntio de iniciar el análisis de similitud de documentos, esto puede tardar varios minutos, un correo se le enviará cuando el proceso termine"
-    this.showModalConfirm("Iniciar Análisis de similitud", message, '', false, false);
+    this.showModalConfirm("Iniciar Análisis de similitud", message, '', false, false, true);
+  }
 
+  async indexDocument(selectedItem: any){
+    this.document = selectedItem;
+    await this.documentManagerService.indexDocument(this.document).then(response => {
+      if (response) {
+        if (response.status_code === 200) {
+          this.showModalConfirm("Indexado exitoso", response.message, '');
+        }
+        else{
+          this.showModalConfirm("Error al indexar", response.message, "danger");
+        }
+      }
+    }).catch(error => {
+      console.log(error);
+      this.showModalConfirm("Error al indexar", "Error en endpoint", "danger");
+    });
   }
 
   async deleteDocument(selectedItem: any){
@@ -86,7 +143,14 @@ export class DocumentListComponent implements OnInit {
     });*/
   }
 
-  showModalConfirm(title, msg, modalType='', reload=false, hiddeBtnCancel=true) {
+  executeSimilarityAnalisis(){
+    console.log("RUN ANALYSIS");
+    console.log(this.document);
+    this.plagiarismDetectionService.executeSimilarityAnalisis(this.document);
+
+  }
+
+  showModalConfirm(title, msg, modalType='', reload=false, hiddeBtnCancel=true, isAnalysis=false) {
     this.bsModalRef = this.modalService.show(ComfirmPopupComponent, {
       class: 'modal-auto siigo-popup',
       ignoreBackdropClick: true,
@@ -106,6 +170,7 @@ export class DocumentListComponent implements OnInit {
     this.bsModalRef.content.responsePopup.subscribe(
       (confirm: boolean) => {
         if (confirm) {
+          if(isAnalysis) this.executeSimilarityAnalisis();
           if(reload) location.reload();
         }
       }
