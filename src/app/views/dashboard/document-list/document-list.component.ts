@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
 import { PlagiarismDetectionManagerService } from './../../../services/managers/plagiarism-detection.manager';
 import { DocumentManagerService } from './../../../services/managers/document.manager';
 import { ModalCreateDocumentComponent } from './../modal-create-document/modal-create-document.component';
@@ -6,6 +6,7 @@ import { Document } from './../../../models/document';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ComfirmPopupComponent } from '../../comfirm-popup/comfirm-popup.component';
 import { interval, Subscription, timer } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,16 +19,20 @@ export class DocumentListComponent implements OnInit {
   @ViewChild('modalCreateDocument', { static: false })
   modalCreateDocument: ModalCreateDocumentComponent;
 
+  //@Output() documentSimilarityAnalisis: EventEmitter<any> = new EventEmitter<any>();
+
   public timerSubscription: Subscription;
 
   public document: Document;
   public bsModalRef: BsModalRef;
   public downloadFIileURL: string = "http://localhost:5000/api/v1/plagiarism/downloadFile/";
 
+
   constructor(
     private documentManagerService: DocumentManagerService,
     private plagiarismDetectionService: PlagiarismDetectionManagerService,
-    private modalService: BsModalService) {
+    private modalService: BsModalService,
+    private router: Router) {
     this.document = new Document();
    }
 
@@ -122,6 +127,11 @@ export class DocumentListComponent implements OnInit {
       console.log(error);
       this.showModalConfirm("Error al indexar", "Error en endpoint", "danger");
     });
+  }
+
+  showDocumentAnalisis(selectedItem: any){
+    let url = `#/dashboard/similarityAnalysis/`+selectedItem.id;
+    this.router.navigate([]).then(result => { window.open(url, '_blank'); })
   }
 
   async deleteDocument(selectedItem: any){

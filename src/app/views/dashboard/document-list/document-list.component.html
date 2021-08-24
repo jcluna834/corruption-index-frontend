@@ -54,7 +54,7 @@
           <td>
             <button *ngIf="row.status == 0" type="button" class="btn btn-primary" (click)="modalAnalisis(row)" title="Analizar"><span class="icon-list"></span></button>
             <button *ngIf="row.status != 2" type="button" class="btn btn-primary" (click)="indexDocument(row)" title="Indexar"><span class="icon-book-open"></span></button>
-            <button *ngIf="row.status != 0" type="button" class="btn btn-primary" (click)="deleteDocument(row)" title="Ver Análisis"><span class="icon-magnifier"></span></button>
+            <button *ngIf="row.status != 0" type="button" class="btn btn-primary" (click)="showDocumentAnalisis(row)" title="Ver Análisis"><span class="icon-magnifier"></span></button>
           </td>
         </tr>
       </tbody>

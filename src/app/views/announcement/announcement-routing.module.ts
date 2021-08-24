@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ColorsComponent } from './colors.component';
 import { AnnouncementListComponent } from './announcement-list/announcement-list.component';
 
 const routes: Routes = [
