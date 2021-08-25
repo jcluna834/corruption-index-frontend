@@ -1,6 +1,9 @@
 <!-- Modal crear documento -->
 <app-modal-create-document #modalCreateDocument></app-modal-create-document>
 
+<!-- Modal Lista de reportes -->
+<app-modal-similarity-analisis-list #modalAnalysisList></app-modal-similarity-analisis-list>
+
 <div class="card">
   <div class="card-header">
     Documents
@@ -54,7 +57,7 @@
           <td>
             <button *ngIf="row.status == 0" type="button" class="btn btn-primary" (click)="modalAnalisis(row)" title="Analizar"><span class="icon-list"></span></button>
             <button *ngIf="row.status != 2" type="button" class="btn btn-primary" (click)="indexDocument(row)" title="Indexar"><span class="icon-book-open"></span></button>
-            <button *ngIf="row.status != 0" type="button" class="btn btn-primary" (click)="showDocumentAnalisis(row)" title="Ver Análisis"><span class="icon-magnifier"></span></button>
+            <button *ngIf="row.status != 0" type="button" class="btn btn-primary" (click)="showModalListAnalysis(row)" title="Ver Análisis"><span class="icon-magnifier"></span></button>
           </td>
         </tr>
       </tbody>

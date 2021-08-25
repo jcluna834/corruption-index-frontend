@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/cor
 import { PlagiarismDetectionManagerService } from './../../../services/managers/plagiarism-detection.manager';
 import { DocumentManagerService } from './../../../services/managers/document.manager';
 import { ModalCreateDocumentComponent } from './../modal-create-document/modal-create-document.component';
+import { ModalSimilarityAnalisisListComponent } from './../modal-similarity-analisis-list/modal-similarity-analisis-list.component';
 import { Document } from './../../../models/document';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ComfirmPopupComponent } from '../../comfirm-popup/comfirm-popup.component';
@@ -18,6 +19,9 @@ export class DocumentListComponent implements OnInit {
 
   @ViewChild('modalCreateDocument', { static: false })
   modalCreateDocument: ModalCreateDocumentComponent;
+
+  @ViewChild('modalAnalysisList', { static: false })
+  modalAnalysisList: ModalSimilarityAnalisisListComponent;
 
   //@Output() documentSimilarityAnalisis: EventEmitter<any> = new EventEmitter<any>();
 
@@ -127,6 +131,12 @@ export class DocumentListComponent implements OnInit {
       console.log(error);
       this.showModalConfirm("Error al indexar", "Error en endpoint", "danger");
     });
+  }
+
+  
+
+  showModalListAnalysis(selectedItem: any){
+    this.modalAnalysisList.showModal(selectedItem.id);
   }
 
   showDocumentAnalisis(selectedItem: any){

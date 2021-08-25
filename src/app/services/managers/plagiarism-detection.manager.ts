@@ -38,6 +38,39 @@ export class PlagiarismDetectionManagerService {
     }
   }
 
+  async getReportsSimilarityByDocumentId(documentID: any): Promise<any>{
+    try{
+      const reports: any = await this.httpClient.get(this.UrlPlagiarismDetectionServices+'getReportsSimilarityByDocumentId/' + documentID).toPromise();
+      return reports
+    }
+    catch(error){
+      console.log(error);
+      return;
+    }
+  }
+
+  async getDocumentInfo(documentID: any): Promise<any>{
+    try{
+      const reports: any = await this.httpClient.get(this.UrlPlagiarismDetectionServices+'getDocumentInfo/' + documentID).toPromise();
+      return reports
+    }
+    catch(error){
+      console.log(error);
+      return;
+    }
+  }
+
+  async getReportsSimilarityByID(ID: any): Promise<any>{
+    try{
+      const reports: any = await this.httpClient.get(this.UrlPlagiarismDetectionServices+'getReport/' + ID).toPromise();
+      return reports
+    }
+    catch(error){
+      console.log(error);
+      return;
+    }
+  }
+
   async getDocs(): Promise<any>{
     try{
       const reports: any = await this.httpClient.get(this.UrlPlagiarismDetectionServices+'documents').toPromise();

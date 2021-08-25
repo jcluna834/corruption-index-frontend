@@ -12,6 +12,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalCreateDocumentComponent } from './modal-create-document/modal-create-document.component';
 import { DocumentListComponent } from './document-list/document-list.component';
 import { DocumentSimilarityAnalisisComponent } from './document-similarity-analisis/document-similarity-analisis.component';
+import { ModalSimilarityAnalisisListComponent } from './modal-similarity-analisis-list/modal-similarity-analisis-list.component';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { DocumentSimilarityAnalisisComponent } from './document-similarity-anali
     AlertModule.forRoot(),
     ReactiveFormsModule
   ],
-  declarations: [ DashboardComponent, ModalCreateDocumentComponent, DocumentListComponent, DocumentSimilarityAnalisisComponent ],
+  declarations: [ DashboardComponent, ModalCreateDocumentComponent, DocumentListComponent, DocumentSimilarityAnalisisComponent, ModalSimilarityAnalisisListComponent ],
   exports : [ModalCreateDocumentComponent, DocumentListComponent, DocumentSimilarityAnalisisComponent ]
 })
 export class DashboardModule { }
