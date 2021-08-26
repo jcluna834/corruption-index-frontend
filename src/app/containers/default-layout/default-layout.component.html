@@ -1,13 +1,14 @@
 <app-header
-  [navbarBrandRouterLink]="['/dashboard']"
+  [navbarBrandRouterLink]="['/document']"
   [fixed]="true"
   [navbarBrandFull]="{src: 'assets/img/brand/logo.svg', width: 89, height: 25, alt: 'CoreUI Logo'}"
   [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
   [sidebarToggler]="'lg'"
   [asideMenuToggler]="'lg'">
+  <!--
   <ul class="nav navbar-nav d-md-down-none">
     <li class="nav-item px-3">
-      <a class="nav-link" href="#">Dashboard</a>
+      <a class="nav-link" href="#">Documents</a>
     </li>
     <li class="nav-item px-3">
       <a class="nav-link" href="#">Users</a>
@@ -16,8 +17,9 @@
       <a class="nav-link" href="#">Settings</a>
     </li>
   </ul>
+  -->
   <ul class="nav navbar-nav ml-auto">
-    <li class="nav-item d-md-down-none">
+    <!--<li class="nav-item d-md-down-none">
       <a class="nav-link" href="#"><i class="icon-bell"></i><span class="badge badge-pill badge-danger">5</span></a>
     </li>
     <li class="nav-item d-md-down-none">
@@ -45,7 +47,7 @@
         <a class="dropdown-item" href="#"><i class="fa fa-shield"></i> Lock account</a>
         <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
       </div>
-    </li>
+    </li>-->
   </ul>
 </app-header>
 <div class="app-body">
@@ -59,13 +61,13 @@
     <!-- breaking change 'cui-breadcrumb' -->
     <cui-breadcrumb>
       <!-- Breadcrumb Menu-->
-      <li class="breadcrumb-menu d-md-down-none">
+      <!--<li class="breadcrumb-menu d-md-down-none">
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
           <a class="btn" href="#"><i class="icon-speech"></i></a>
-          <a class="btn" [routerLink]="['/dashboard']"><i class="icon-graph"></i> &nbsp;Dashboard</a>
+          <a class="btn" [routerLink]="['/document']"><i class="icon-graph"></i> &nbsp;Document</a>
           <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
         </div>
-      </li>
+      </li>-->
     </cui-breadcrumb>
     <!-- deprecation warning for 'app-breadcrumb' -->
     <!--<ol class="breadcrumb">-->
@@ -74,7 +76,7 @@
       <!--<li class="breadcrumb-menu d-md-down-none">-->
         <!--<div class="btn-group" role="group" aria-label="Button group with nested dropdown">-->
           <!--<a class="btn" href="#"><i class="icon-speech"></i></a>-->
-          <!--<a class="btn" [routerLink]="['/dashboard']"><i class="icon-graph"></i> &nbsp;Dashboard</a>-->
+          <!--<a class="btn" [routerLink]="['/document']"><i class="icon-graph"></i> &nbsp;Document</a>-->
           <!--<a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>-->
         <!--</div>-->
       <!--</li>-->
@@ -83,7 +85,7 @@
       <router-outlet></router-outlet>
     </div><!-- /.container-fluid -->
   </main>
-  <app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
+  <!--<app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
     <tabset>
       <tab>
         <ng-template tabHeading><i class="icon-list"></i></ng-template>
@@ -333,9 +335,9 @@
         </div>
       </tab>
     </tabset>
-  </app-aside>
+  </app-aside>-->
 </div>
 <app-footer>
-  <span><a href="https://coreui.io">CoreUI</a> &copy; 2018 creativeLabs.</span>
+  <span><a href="http://artemisa.unicauca.edu.co/~jcluna/">Julio Luna</a> &copy; 2021.</span>
   <span class="ml-auto">Powered by <a href="https://coreui.io/angular">CoreUI for Angular</a></span>
 </app-footer>

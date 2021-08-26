@@ -8,16 +8,12 @@ export const navItems: INavData[] = [
   {
     name: 'Convocatorias',
     url: '/announcement/list',
-    icon: 'icon-drop'
+    icon: 'icon-drawer'
   },
   {
     name: 'Documentos',
-    url: '/dashboard',
-    icon: 'icon-speedometer',
-    badge: {
-      variant: 'info',
-      text: 'NEW'
-    }
+    url: '/document',
+    icon: 'icon-docs'
   },
   /*{
     name: 'Typography',
@@ -225,7 +221,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Disabled',
-    url: '/dashboard',
+    url: '/document',
     icon: 'icon-ban',
     badge: {
       variant: 'secondary',

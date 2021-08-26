@@ -12,7 +12,7 @@ import { RegisterComponent } from './views/register/register.component';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'document',
     pathMatch: 'full',
   },
   {
@@ -63,8 +63,8 @@ export const routes: Routes = [
         loadChildren: () => import('./views/chartjs/chartjs.module').then(m => m.ChartJSModule)
       },
       {
-        path: 'dashboard',
-        loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
+        path: 'document',
+        loadChildren: () => import('./views/document/document.module').then(m => m.DocumentModule)
       },
       {
         path: 'icons',

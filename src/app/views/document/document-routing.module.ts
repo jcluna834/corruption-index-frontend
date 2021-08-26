@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { DashboardComponent } from './dashboard.component';
+import { DocumentComponent } from './document.component';
 import { DocumentSimilarityAnalisisComponent } from './document-similarity-analisis/document-similarity-analisis.component';
 
 const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Dashboard'
+      title: 'Documents'
     },
     children: [
       {
@@ -18,7 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'list',
-        component: DashboardComponent,
+        component: DocumentComponent,
         data: {
           title: 'list'
         }
@@ -38,4 +38,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule {}
+export class DocumentRoutingModule {}

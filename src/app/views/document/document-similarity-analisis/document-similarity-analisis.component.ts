@@ -34,6 +34,7 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
     this.reportDate = this.infoReport.AnalysisDate;
     await this.getDocumentInfo(this.infoReport.documentID);
     this.documentTitle = this.documentInfo.title;
+    console.log(this.reportsES);
   }
 
   async getReports(){
@@ -55,8 +56,9 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
     this.documentInfo = response.data;
   }
   
-  cancel(){
+  cancel(selectedItem: any){
     console.log("cancelar");
+    console.log(selectedItem);
   }
 
 }

@@ -5,8 +5,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { AlertModule } from 'ngx-bootstrap/alert';
 
-import { DashboardComponent } from './dashboard.component';
-import { DashboardRoutingModule } from './dashboard-routing.module';
+import { DocumentComponent } from './document.component';
+import { DocumentRoutingModule } from './document-routing.module';
 import { CommonModule } from '@angular/common';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalCreateDocumentComponent } from './modal-create-document/modal-create-document.component';
@@ -18,7 +18,7 @@ import { ModalSimilarityAnalisisListComponent } from './modal-similarity-analisi
 @NgModule({
   imports: [
     FormsModule,
-    DashboardRoutingModule,
+    DocumentRoutingModule,
     ChartsModule,
     BsDropdownModule,
     CommonModule,
@@ -27,7 +27,7 @@ import { ModalSimilarityAnalisisListComponent } from './modal-similarity-analisi
     AlertModule.forRoot(),
     ReactiveFormsModule
   ],
-  declarations: [ DashboardComponent, ModalCreateDocumentComponent, DocumentListComponent, DocumentSimilarityAnalisisComponent, ModalSimilarityAnalisisListComponent ],
+  declarations: [ DocumentComponent, ModalCreateDocumentComponent, DocumentListComponent, DocumentSimilarityAnalisisComponent, ModalSimilarityAnalisisListComponent ],
   exports : [ModalCreateDocumentComponent, DocumentListComponent, DocumentSimilarityAnalisisComponent ]
 })
-export class DashboardModule { }
+export class DocumentModule { }

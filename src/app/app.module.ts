@@ -43,7 +43,7 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
-import { DashboardModule } from './views/dashboard/dashboard.module';
+import { DocumentModule } from './views/document/document.module';
 
 @NgModule({
   imports: [
@@ -61,7 +61,7 @@ import { DashboardModule } from './views/dashboard/dashboard.module';
     ChartsModule,
     HttpClientModule,
     CommonModule,
-    DashboardModule,
+    DocumentModule,
     FormsModule,
     ReactiveFormsModule,
   ],

@@ -6,10 +6,10 @@ import { DocumentListComponent } from './document-list/document-list.component';
 
 
 @Component({
-  templateUrl: 'dashboard.component.html',
-  selector: 'dashboard',
+  templateUrl: 'document.component.html',
+  selector: 'document',
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DocumentComponent implements OnInit, AfterViewInit {
 
   @ViewChild('documentList', { static: false })
   documentList: DocumentListComponent;

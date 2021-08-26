@@ -40,7 +40,7 @@ export class ModalSimilarityAnalisisListComponent implements OnInit {
   }
 
   showDocumentAnalysis(selectedItem: any){
-    let url = `#/dashboard/similarityAnalysis/`+selectedItem.id;
+    let url = `#/document/similarityAnalysis/`+selectedItem.id;
     this.router.navigate([]).then(result => { window.open(url, '_blank'); })
   }
 

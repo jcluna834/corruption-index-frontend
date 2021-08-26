@@ -1,0 +1,48 @@
+<div class="animated fadeIn">
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            Análisis de similitud del documento: <strong>{{documentTitle}}</strong>
+          </div>
+          <div>
+            Fecha de análsis: <strong>{{reportDate}}</strong>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-responsive-sm table-hover table-outline mb-0">
+            <thead class="thead-light">
+              <tr>
+                <th>Párrafo</th>
+                <th>Documento asociado</th>
+                <th>similarity_percentage</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of reportsES">
+                <td>
+                  <div class="small text-muted">
+                    <span>{{row.paragraph_text}}</span>
+                  </div>
+                </td>
+                <td>
+                  <div>{{row.document.title}}</div>
+                  <div class="small text-muted">
+                    <span>{{row.document.id}}</span>
+                  </div>
+                </td>
+                <td>{{row.similarity_percentage}}</td>
+                <td>
+                  <button type="button" class="btn btn-info" (click)="cancel(row)" title="Editar"><span class="icon-pencil"></span></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
