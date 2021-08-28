@@ -8,14 +8,26 @@ export const navItems: INavData[] = [
   {
     name: 'Convocatorias',
     url: '/announcement/list',
-    icon: 'icon-drawer'
+    icon: 'icon-drawer',
+    children: [
+      {
+        name: 'List',
+        url: '/announcement/list',
+        icon: 'icon-drawer'
+      },
+      {
+        name: 'Common Phrase',
+        url: '/announcement/commonPhrases',
+        icon: 'icon-speech'
+      }
+    ]
   },
   {
     name: 'Documentos',
     url: '/document',
     icon: 'icon-docs'
   },
-  /*{
+  {
     name: 'Typography',
     url: '/theme/typography',
     icon: 'icon-pencil'
@@ -243,5 +255,5 @@ export const navItems: INavData[] = [
     icon: 'icon-layers',
     variant: 'danger',
     attributes: { target: '_blank', rel: 'noopener' }
-  }*/
+  }
 ];

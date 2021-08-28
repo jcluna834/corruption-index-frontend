@@ -1,15 +1,11 @@
-export class Announcement {
+export class CommonPhrase {
     constructor(
         public id?: number,
         public created_date?: string,
         public updated_date?: string,
         public is_deleted?: number,
-        public name?: number,
         public description?: string,
-        public startDate?: string,
-        public endDate?: string,
-        public responsibleCode?: number,
-        public entityCode?: number,
-
+        public phrase?: number,
+        public announcementCode?: number,
     ) { }
 }

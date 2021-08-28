@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ModalCreateDocumentComponent } from './modal-create-document/modal-create-document.component';
 import { DocumentListComponent } from './document-list/document-list.component';
-import { DocumentSimilarityAnalisisComponent } from './document-similarity-analisis/document-similarity-analisis.component';
+import { DocumentSimilarityAnalisisComponent, FunctionCallerPipe } from './document-similarity-analisis/document-similarity-analisis.component';
 import { ModalSimilarityAnalisisListComponent } from './modal-similarity-analisis-list/modal-similarity-analisis-list.component';
 
 
@@ -27,7 +27,18 @@ import { ModalSimilarityAnalisisListComponent } from './modal-similarity-analisi
     AlertModule.forRoot(),
     ReactiveFormsModule
   ],
-  declarations: [ DocumentComponent, ModalCreateDocumentComponent, DocumentListComponent, DocumentSimilarityAnalisisComponent, ModalSimilarityAnalisisListComponent ],
-  exports : [ModalCreateDocumentComponent, DocumentListComponent, DocumentSimilarityAnalisisComponent ]
+  declarations: [ 
+    DocumentComponent, 
+    ModalCreateDocumentComponent, 
+    DocumentListComponent, 
+    DocumentSimilarityAnalisisComponent, 
+    ModalSimilarityAnalisisListComponent,
+    FunctionCallerPipe
+  ],
+  exports : [
+    ModalCreateDocumentComponent, 
+    DocumentListComponent, 
+    DocumentSimilarityAnalisisComponent 
+  ]
 })
 export class DocumentModule { }

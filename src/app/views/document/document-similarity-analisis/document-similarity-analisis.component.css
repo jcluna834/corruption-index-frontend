@@ -1,0 +1,39 @@
+.list-group-item-accent-amarillo {
+    border-left: 4px solid #fffb07;
+}
+
+.list-group-item-accent-naranja {
+    border-left: 4px solid #ff7c01;
+}
+
+.list-group-item-accent-rojo {
+    border-left: 4px solid #f86c6b;
+}
+
+.badge-amarillo {
+    color: #23282c;
+    background-color: #fffb07;
+}
+
+.badge-naranja {
+    color: #23282c;
+    background-color: #ff7c01;
+}
+
+.badge-danger {
+    color: #fff;
+    background-color: #f86c6b;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}

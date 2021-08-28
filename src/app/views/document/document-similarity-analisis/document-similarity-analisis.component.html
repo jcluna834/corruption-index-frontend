@@ -16,25 +16,47 @@
             <thead class="thead-light">
               <tr>
                 <th>Párrafo</th>
+                <th>Similitud (%)</th>
                 <th>Documento asociado</th>
-                <th>similarity_percentage</th>
+                <th>Highlight</th>
+                <th>Alerta</th>
                 <th>Opciones</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let row of reportsES">
-                <td>
-                  <div class="small text-muted">
-                    <span>{{row.paragraph_text}}</span>
-                  </div>
-                </td>
+                <td>{{row.paragraph_text}}</td>
+                <td>{{row.similarity_percentage}}</td>
                 <td>
                   <div>{{row.document.title}}</div>
                   <div class="small text-muted">
                     <span>{{row.document.id}}</span>
                   </div>
                 </td>
-                <td>{{row.similarity_percentage}}</td>
+                <td [innerHTML]="setStyleHighlight | functionCaller : row"></td>
+                
+                <!--<td [innerHTML]="setStyleHighlight(row)"></td>-->
+                <td class="small text-muted">
+                  <div class="list-group list-group-accent">
+                    <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">Alerta</div>
+                    <div *ngFor="let word of row.highlight[0].my_uncommon_words">
+                      <div *ngIf="word.alerta != 'None'">
+                        <div class="list-group-item list-group-item-accent-amarillo list-group-item-divider" *ngIf="word.alerta == 'amarillo'">
+                          {{word.uncommon_word}}
+                        </div>
+                        <div class="list-group-item list-group-item-accent-amarillo list-group-item-divider" *ngIf="word.alerta == 'naranja'">
+                          {{word.uncommon_word}}
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngFor="let word of row.highlight[0].common_words">
+                      <div class="list-group-item list-group-item-accent-rojo list-group-item-divider" >
+                        {{word}}
+                      </div>
+                    </div>
+                  </div>
+                  
+                </td>
                 <td>
                   <button type="button" class="btn btn-info" (click)="cancel(row)" title="Editar"><span class="icon-pencil"></span></button>
                 </td>

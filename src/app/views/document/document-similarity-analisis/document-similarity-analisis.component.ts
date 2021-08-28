@@ -2,12 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PlagiarismDetectionManagerService } from './../../../services/managers/plagiarism-detection.manager';
+import { Pipe } from '@angular/core';
+
+@Pipe({name: 'functionCaller'})
+export class FunctionCallerPipe {
+    transform(func: any, args: any[]): any {
+        return func(args);
+    }
+}
 
 @Component({
   selector: 'app-document-similarity-analisis',
   templateUrl: './document-similarity-analisis.component.html',
   styleUrls: ['./document-similarity-analisis.component.css']
 })
+
 export class DocumentSimilarityAnalisisComponent implements OnInit {
 
   private routeSub: Subscription;
@@ -34,7 +43,6 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
     this.reportDate = this.infoReport.AnalysisDate;
     await this.getDocumentInfo(this.infoReport.documentID);
     this.documentTitle = this.documentInfo.title;
-    console.log(this.reportsES);
   }
 
   async getReports(){
@@ -46,6 +54,7 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
           paragraph_text: x.paragraph_text,
           similarity_percentage: x.similarity_percentage,
           document: x.doc_,
+          highlight: x.highlight,
         }
       })
     }
@@ -59,6 +68,21 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
   cancel(selectedItem: any){
     console.log("cancelar");
     console.log(selectedItem);
+  }
+
+  setStyleHighlight(selectedItem: any){
+    let text = selectedItem.highlight[0].content;
+    let words = selectedItem.highlight[0].my_uncommon_words.filter(word => word.alerta != "None"); 
+    words.forEach(word => {
+      var regEx = new RegExp(word.uncommon_word, "i");
+      text = text.replace(regEx, '<span class="badge badge-warning">'+word.uncommon_word+'</span>');
+    });
+
+    selectedItem.highlight[0].common_words.forEach(word => {
+      var regEx = new RegExp(word, "i");
+      text = text.replace(regEx, '<span title="Igual" class="badge badge-danger">'+word+'</span>');
+    });
+    return text;
   }
 
 }
