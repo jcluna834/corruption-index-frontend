@@ -28,7 +28,14 @@ const routes: Routes = [
         data: {
           title: 'Frases comúnes'
         }
-      }
+      },
+      {
+        path: 'commonPhrases/:id',
+        component: CommonPhraseListComponent,
+        data: {
+          title: 'Frases comúnes'
+        }
+      },
     ]
   }
 ];

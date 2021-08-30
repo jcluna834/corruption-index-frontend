@@ -4,6 +4,7 @@ import { ModalCreateAnnouncementComponent } from './../../../views/announcement/
 import { Announcement } from './../../../models/announcement';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ComfirmPopupComponent } from '../../comfirm-popup/comfirm-popup.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-announcement-list',
@@ -19,7 +20,8 @@ export class AnnouncementListComponent implements OnInit {
   public bsModalRef: BsModalRef;
 
   constructor(private plagiarismDetectionService: PlagiarismDetectionManagerService,
-    private modalService: BsModalService) {
+    private modalService: BsModalService,
+    private router: Router) {
     this.announcement = new Announcement();
    }
 
@@ -70,6 +72,11 @@ export class AnnouncementListComponent implements OnInit {
     }).catch(error => {
       console.log(error);
     });
+  }
+
+  addCommonPhrases(selectedItem: any){
+    let url = `#/announcement/commonPhrases/`+selectedItem.id;
+    this.router.navigate([]).then(result => { window.open(url, '_blank'); })
   }
 
   showModalConfirm(title, msg, modalType='', reload=false) {

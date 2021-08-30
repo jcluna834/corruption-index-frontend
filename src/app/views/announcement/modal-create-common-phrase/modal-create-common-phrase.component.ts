@@ -3,7 +3,6 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonPhrase } from './../../../models/commonPhrase';
 import { CommonPhraseManagerService } from './../../../services/managers/commonPhrase.manager';
-import { GlobalConstants } from '../../../common/global-constants';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ComfirmPopupComponent } from '../../comfirm-popup/comfirm-popup.component';
 
@@ -31,9 +30,11 @@ export class ModalCreateCommonPhraseComponent implements OnInit {
     this.formCommonPhrase = this.fb.group({
       'description': [undefined, [Validators.required]],
       'phrase': [undefined, [Validators.required]],
-      'announcementCode': [undefined, [Validators.required]],
+      'announcementCode': [undefined, []],
     });
   }
+
+  private announcementID: number;
 
   public get description() { return this.formCommonPhrase.get('description'); }
   public get phrase() { return this.formCommonPhrase.get('phrase'); }
@@ -42,10 +43,12 @@ export class ModalCreateCommonPhraseComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  showModalCreate(){
+  showModalCreate(announcementID: number){
     this.option = "Save";
     this.titleModal = "Crear una frase común";
     this.clearForm();
+    this.announcementID = announcementID;
+    this.announcementCode.setValue(this.announcementID);
     this.commonPhraseModal.show();
   }
 
@@ -90,7 +93,7 @@ export class ModalCreateCommonPhraseComponent implements OnInit {
   clearForm() {
     this.description.setValue('');
     this.phrase.setValue('');
-    //this.announcementCode.setValue('');
+    this.announcementCode.setValue('');
   }
 
   createUpdateCommonPhrase(){
