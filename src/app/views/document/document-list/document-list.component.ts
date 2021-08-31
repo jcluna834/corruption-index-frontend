@@ -163,11 +163,9 @@ export class DocumentListComponent implements OnInit {
     });*/
   }
 
-  executeSimilarityAnalisis(){
-    console.log("RUN ANALYSIS");
-    console.log(this.document);
+  async executeSimilarityAnalisis(){
     this.plagiarismDetectionService.executeSimilarityAnalisis(this.document);
-
+    setTimeout( () => { this.getAnalysisHistory() }, 2000 );
   }
 
   showModalConfirm(title, msg, modalType='', reload=false, hiddeBtnCancel=true, isAnalysis=false) {

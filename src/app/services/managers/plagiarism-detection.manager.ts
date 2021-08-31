@@ -135,7 +135,7 @@ export class PlagiarismDetectionManagerService {
 
   async executeSimilarityAnalisis(data: any): Promise<any>{
     try{
-      const response: any = await this.httpClient.post(this.UrlPlagiarismDetectionServices + 'SimulateExecuteSimilarityAnalisis', data).toPromise();
+      const response: any = await this.httpClient.post(this.UrlPlagiarismDetectionServices + 'executeSimilarityAnalisis', data).toPromise(); //SimulateExecuteSimilarityAnalisis
       return response;
     }
     catch(error){

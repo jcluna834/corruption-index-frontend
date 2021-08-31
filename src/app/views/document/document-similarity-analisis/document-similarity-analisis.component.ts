@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PlagiarismDetectionManagerService } from './../../../services/managers/plagiarism-detection.manager';
 import { Pipe } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 
 @Pipe({name: 'functionCaller'})
 export class FunctionCallerPipe {
@@ -20,9 +22,11 @@ export class FunctionCallerPipe {
 export class DocumentSimilarityAnalisisComponent implements OnInit {
 
   private routeSub: Subscription;
+  private myStyle: SafeHtml;
   
   constructor(private route: ActivatedRoute,
-    private plagiarismDetectionService: PlagiarismDetectionManagerService,) { }
+    private plagiarismDetectionService: PlagiarismDetectionManagerService,
+    private sanitizer: DomSanitizer) { }
   
   private reportID: string;
   private infoReport: any;
@@ -32,10 +36,27 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
 
   private documentTitle: string;
 
+  private styleBadge = `<style>
+    .badge-amarillo {
+      color: #23282c;
+      background-color: #fffb07;
+    }
+
+    .badge-naranja {
+      color: #23282c;
+      background-color: #eb8b32;
+    }
+
+    .badge-rojo {
+      color: #23282c;
+      background-color: #f73c3c;
+    }</style>`;
+
   ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {
       this.reportID = params['id'];
     });
+    this.myStyle = this.sanitizer.bypassSecurityTrustHtml(this.styleBadge);
   }
 
   async ngAfterViewInit() {
@@ -75,12 +96,12 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
     let words = selectedItem.highlight[0].my_uncommon_words.filter(word => word.alerta != "None"); 
     words.forEach(word => {
       var regEx = new RegExp(word.uncommon_word, "i");
-      text = text.replace(regEx, '<span class="badge badge-warning">'+word.uncommon_word+'</span>');
+      text = text.replace(regEx, '<span title='+word.similar_word+' class="badge badge-'+word.alerta+'">'+word.uncommon_word+'</span>');
     });
 
     selectedItem.highlight[0].common_words.forEach(word => {
       var regEx = new RegExp(word, "i");
-      text = text.replace(regEx, '<span title="Igual" class="badge badge-danger">'+word+'</span>');
+      text = text.replace(regEx, '<span title='+word+' class="badge badge-rojo">'+word+'</span>');
     });
     return text;
   }
