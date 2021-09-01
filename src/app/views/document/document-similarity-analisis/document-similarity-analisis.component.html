@@ -1,4 +1,8 @@
+<!-- Modal agregar frase comun -->
+<app-modal-create-common-phrase #modalCreateCommonPhrase></app-modal-create-common-phrase>
+
 <div [innerHtml]="myStyle"></div>
+
 <div class="animated fadeIn">
   <div class="row">
     <div class="col-md-12">
@@ -15,17 +19,18 @@
           <table class="table table-responsive-sm table-hover table-outline mb-0">
             <thead class="thead-light">
               <tr>
-                <th>Párrafo</th>
+                <th style="width: 30%;">Párrafo</th>
+                <th style="width: 30%;">Highlight</th>
                 <th>Similitud (%)</th>
                 <th>Documento asociado</th>
-                <th>Highlight</th>
-                <th>Alerta</th>
+                <!--<th>Alerta</th>-->
                 <th>Opciones</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let row of reportsES">
-                <td>{{row.paragraph_text}}</td>
+                <td [innerHTML]="setStyleParragraph | functionCaller : row"></td>
+                <td [innerHTML]="setStyleHighlight | functionCaller : row"></td>
                 <td>{{row.similarity_percentage}}</td>
                 <td>
                   <div>{{row.document.title}}</div>
@@ -33,8 +38,7 @@
                     <span>{{row.document.id}}</span>
                   </div>
                 </td>
-                <td [innerHTML]="setStyleHighlight | functionCaller : row"></td>
-                
+                <!--
                 <td class="small text-muted">
                   <div class="list-group list-group-accent">
                     <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">Alerta</div>
@@ -43,7 +47,7 @@
                         <div class="list-group-item list-group-item-accent-amarillo list-group-item-divider" *ngIf="word.alerta == 'amarillo'">
                           {{word.uncommon_word}}
                         </div>
-                        <div class="list-group-item list-group-item-accent-amarillo list-group-item-divider" *ngIf="word.alerta == 'naranja'">
+                        <div class="list-group-item list-group-item-accent-naranja list-group-item-divider" *ngIf="word.alerta == 'naranja'">
                           {{word.uncommon_word}}
                         </div>
                       </div>
@@ -54,10 +58,10 @@
                       </div>
                     </div>
                   </div>
-                  
                 </td>
+                -->
                 <td>
-                  <button type="button" class="btn btn-info" (click)="cancel(row)" title="Editar"><span class="icon-pencil"></span></button>
+                  <button type="button" class="btn btn-info" (click)="addCommonPhrase(row)" title="Editar"><span class="icon-speech"></span></button>
                 </td>
               </tr>
             </tbody>

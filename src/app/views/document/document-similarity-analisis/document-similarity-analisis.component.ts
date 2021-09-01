@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PlagiarismDetectionManagerService } from './../../../services/managers/plagiarism-detection.manager';
 import { Pipe } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ModalCreateCommonPhraseComponent } from './../../../views/announcement/modal-create-common-phrase/modal-create-common-phrase.component';
 
 
 @Pipe({name: 'functionCaller'})
@@ -20,6 +21,9 @@ export class FunctionCallerPipe {
 })
 
 export class DocumentSimilarityAnalisisComponent implements OnInit {
+
+  @ViewChild('modalCreateCommonPhrase', { static: false })
+  modalCreateCommonPhrase: ModalCreateCommonPhraseComponent;
 
   private routeSub: Subscription;
   private myStyle: SafeHtml;
@@ -86,22 +90,36 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
     this.documentInfo = response.data;
   }
   
-  cancel(selectedItem: any){
-    console.log("cancelar");
-    console.log(selectedItem);
+  addCommonPhrase(selectedItem: any){
+    this.modalCreateCommonPhrase.showModalCreateFromAnalysis(this.documentInfo.announcementCode, selectedItem);
   }
 
   setStyleHighlight(selectedItem: any){
     let text = selectedItem.highlight[0].content;
     let words = selectedItem.highlight[0].my_uncommon_words.filter(word => word.alerta != "None"); 
     words.forEach(word => {
-      var regEx = new RegExp(word.uncommon_word, "i");
-      text = text.replace(regEx, '<span title='+word.similar_word+' class="badge badge-'+word.alerta+'">'+word.uncommon_word+'</span>');
+      var regEx = new RegExp(word.uncommon_word, "ig");
+      text = text.replaceAll(regEx, '<span class="badge badge-'+word.alerta+'">'+word.uncommon_word+'</span>');
     });
 
     selectedItem.highlight[0].common_words.forEach(word => {
-      var regEx = new RegExp(word, "i");
-      text = text.replace(regEx, '<span title='+word+' class="badge badge-rojo">'+word+'</span>');
+      var regEx = new RegExp(word, "ig");
+      text = text.replaceAll(regEx, '<span class="badge badge-rojo">'+word+'</span>');
+    });
+    return text;
+  }
+
+  setStyleParragraph(selectedItem: any){
+    let text = selectedItem.paragraph_text;
+    let words = selectedItem.highlight[0].my_uncommon_words.filter(word => word.alerta != "None"); 
+    words.forEach(word => {
+      var regEx = new RegExp(word.similar_word, "ig");
+      text = text.replaceAll(regEx, '<span class=" badge-'+word.alerta+'">'+word.similar_word+'</span>');
+    });
+
+    selectedItem.highlight[0].common_words.forEach(word => {
+      var regEx = new RegExp(word, "ig");
+      text = text.replaceAll(regEx, '<span class="badge badge-rojo">'+word+'</span>');
     });
     return text;
   }

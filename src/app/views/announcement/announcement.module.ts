@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
-import { ColorsComponent } from './colors.component';
 
 // Announcement Routing
 import { AnnouncementRoutingModule } from './announcement-routing.module';
@@ -23,8 +22,11 @@ import { ModalCreateCommonPhraseComponent } from './modal-create-common-phrase/m
     ReactiveFormsModule,
   ],
   declarations: [
-    ColorsComponent, ModalCreateAnnouncementComponent, AnnouncementListComponent, CommonPhraseListComponent, ModalCreateCommonPhraseComponent
+    ModalCreateAnnouncementComponent, 
+    AnnouncementListComponent,
+    CommonPhraseListComponent, 
+    ModalCreateCommonPhraseComponent
   ],
-  exports : [ModalCreateAnnouncementComponent, AnnouncementListComponent]
+  exports : [ModalCreateAnnouncementComponent, AnnouncementListComponent, ModalCreateCommonPhraseComponent ]
 })
 export class AnnouncementModule { }

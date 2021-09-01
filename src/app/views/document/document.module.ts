@@ -13,7 +13,7 @@ import { ModalCreateDocumentComponent } from './modal-create-document/modal-crea
 import { DocumentListComponent } from './document-list/document-list.component';
 import { DocumentSimilarityAnalisisComponent, FunctionCallerPipe } from './document-similarity-analisis/document-similarity-analisis.component';
 import { ModalSimilarityAnalisisListComponent } from './modal-similarity-analisis-list/modal-similarity-analisis-list.component';
-
+import { AnnouncementModule } from './../announcement/announcement.module';
 
 @NgModule({
   imports: [
@@ -25,7 +25,8 @@ import { ModalSimilarityAnalisisListComponent } from './modal-similarity-analisi
     ButtonsModule.forRoot(),
     ModalModule.forRoot(),
     AlertModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AnnouncementModule
   ],
   declarations: [ 
     DocumentComponent, 
@@ -33,7 +34,7 @@ import { ModalSimilarityAnalisisListComponent } from './modal-similarity-analisi
     DocumentListComponent, 
     DocumentSimilarityAnalisisComponent, 
     ModalSimilarityAnalisisListComponent,
-    FunctionCallerPipe
+    FunctionCallerPipe,
   ],
   exports : [
     ModalCreateDocumentComponent, 

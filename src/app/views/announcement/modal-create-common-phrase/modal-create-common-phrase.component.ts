@@ -52,6 +52,17 @@ export class ModalCreateCommonPhraseComponent implements OnInit {
     this.commonPhraseModal.show();
   }
 
+  showModalCreateFromAnalysis(announcementID: number, content: any){
+    this.option = "Save";
+    this.titleModal = "Crear una frase común";
+    this.clearForm();
+    this.announcementID = announcementID;
+    this.announcementCode.setValue(this.announcementID);
+    //this.phrase.setValue(content.paragraph_text)
+    this.phrase.setValue(content.highlight[0].content)
+    this.commonPhraseModal.show();
+  }
+
   showModalEdit() {
     this.titleModal = "Editar una frase común";
     this.option = "Update";

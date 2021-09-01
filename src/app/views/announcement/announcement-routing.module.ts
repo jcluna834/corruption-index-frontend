@@ -13,7 +13,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'list'
+        redirectTo: 'list',
+        pathMatch: 'full'
       },
       {
         path: 'list',
