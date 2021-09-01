@@ -55,8 +55,8 @@
             <button type="button" class="btn btn-danger" (click)="deleteDocument(row)" title="Eliminar"><span class="icon-trash"></span></button>
           </td>
           <td>
-            <button *ngIf="row.status == 0" type="button" class="btn btn-primary" (click)="modalAnalisis(row)" title="Analizar"><span class="icon-list"></span></button>
-            <button *ngIf="row.status != 2" type="button" class="btn btn-primary" (click)="indexDocument(row)" title="Indexar"><span class="icon-book-open"></span></button>
+            <button *ngIf="row.status == 0" type="button" class="btn btn-success" (click)="modalAnalisis(row)" title="Analizar"><span class="icon-list"></span></button>
+            <button *ngIf="row.status != 2" type="button" class="btn btn-warning" (click)="indexDocument(row)" title="Indexar"><span class="icon-book-open"></span></button>
             <button *ngIf="row.status != 0" type="button" class="btn btn-primary" (click)="showModalListAnalysis(row)" title="Ver Análisis"><span class="icon-magnifier"></span></button>
           </td>
         </tr>

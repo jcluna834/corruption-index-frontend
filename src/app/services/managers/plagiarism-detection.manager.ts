@@ -155,4 +155,15 @@ export class PlagiarismDetectionManagerService {
     }
   }
 
+  async disableParagraph(data: any): Promise<any>{
+    try{
+      const response: any = await this.httpClient.post(this.UrlPlagiarismDetectionServices + 'disableHighlight', data).toPromise();
+      return response;
+    }
+    catch(error){
+        console.log(error);
+        return;
+    }
+  }
+
 }

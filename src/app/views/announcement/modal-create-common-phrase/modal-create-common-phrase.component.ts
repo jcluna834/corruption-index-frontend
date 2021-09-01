@@ -3,6 +3,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonPhrase } from './../../../models/commonPhrase';
 import { CommonPhraseManagerService } from './../../../services/managers/commonPhrase.manager';
+import { PlagiarismDetectionManagerService } from './../../../services/managers/plagiarism-detection.manager';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ComfirmPopupComponent } from '../../comfirm-popup/comfirm-popup.component';
 
@@ -20,10 +21,13 @@ export class ModalCreateCommonPhraseComponent implements OnInit {
   public bsModalRef: BsModalRef;
   public option: string = "Save";
   public titleModal: string = "Crear una frase común";
+  private editJson: boolean = false;
+  private reportsES: any;
 
   constructor(
     private fb: FormBuilder,
     private commonPhraseManagerService: CommonPhraseManagerService,
+    private plagiarismDetectionService: PlagiarismDetectionManagerService,
     private modalService: BsModalService,
   ) {
     this.commonPhrase = new CommonPhrase();
@@ -52,7 +56,7 @@ export class ModalCreateCommonPhraseComponent implements OnInit {
     this.commonPhraseModal.show();
   }
 
-  showModalCreateFromAnalysis(announcementID: number, content: any){
+  showModalCreateFromAnalysis(announcementID: number, content: any, flag: boolean){
     this.option = "Save";
     this.titleModal = "Crear una frase común";
     this.clearForm();
@@ -60,6 +64,8 @@ export class ModalCreateCommonPhraseComponent implements OnInit {
     this.announcementCode.setValue(this.announcementID);
     //this.phrase.setValue(content.paragraph_text)
     this.phrase.setValue(content.highlight[0].content)
+    this.editJson = flag
+    this.reportsES = content
     this.commonPhraseModal.show();
   }
 
@@ -119,9 +125,14 @@ export class ModalCreateCommonPhraseComponent implements OnInit {
     await this.commonPhraseManagerService.saveCommonPhrase(this.commonPhrase).then(response => {
       if (response) {
         if (response.success) {
-          this.showModalConfirm("Guardado exitoso", response.message);
           this.hiddenModal();
-          location.reload();
+          if(this.editJson){
+            if(this.reportsES.collectionId){
+              this.disableParagraph();
+            }
+          }
+          this.showModalConfirm("Guardado exitoso", response.message, '', true);
+          //location.reload();
         }
         else{
           this.showModalConfirm("Error al guardar", response.message, "danger");
@@ -131,6 +142,14 @@ export class ModalCreateCommonPhraseComponent implements OnInit {
       console.log(error);
       this.showModalConfirm("Error al guardar", "Hubo un problema al guardar la frase común", "danger");
     });
+  }
+
+  async disableParagraph(){
+    const paragraph = {
+      id: this.reportsES.collectionId,
+      text: this.reportsES.paragraph_text
+    };
+    await this.plagiarismDetectionService.disableParagraph(paragraph);
   }
 
   async updateCommonPhrase() {
@@ -151,7 +170,7 @@ export class ModalCreateCommonPhraseComponent implements OnInit {
     });
   }
 
-  showModalConfirm(title, msg, modalType='') {
+  showModalConfirm(title, msg, modalType='', reload=false) {
     this.bsModalRef = this.modalService.show(ComfirmPopupComponent, {
       class: 'modal-auto siigo-popup',
       ignoreBackdropClick: true,
@@ -171,6 +190,7 @@ export class ModalCreateCommonPhraseComponent implements OnInit {
     this.bsModalRef.content.responsePopup.subscribe(
       (confirm: boolean) => {
         if (confirm) {
+          if (reload) location.reload();
         }
       }
     );

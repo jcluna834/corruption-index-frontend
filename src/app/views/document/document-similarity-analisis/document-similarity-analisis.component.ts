@@ -46,6 +46,10 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
       background-color: #fffb07;
     }
 
+    .badge {
+      font-size: 90% !important;
+    }
+
     .badge-naranja {
       color: #23282c;
       background-color: #eb8b32;
@@ -74,8 +78,12 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
     const infoReport = await this.plagiarismDetectionService.getReportsSimilarityByID(this.reportID);
     this.infoReport = infoReport.data[0];
     if(this.infoReport.response_elastic){
-      this.reportsES = this.infoReport.response_elastic.map(x =>{
+      this.reportsES = 
+      this.infoReport.response_elastic
+      .filter(x => x.status == 0)
+      .map(x =>{
         return{
+          collectionId: this.reportID,
           paragraph_text: x.paragraph_text,
           similarity_percentage: x.similarity_percentage,
           document: x.doc_,
@@ -91,7 +99,7 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
   }
   
   addCommonPhrase(selectedItem: any){
-    this.modalCreateCommonPhrase.showModalCreateFromAnalysis(this.documentInfo.announcementCode, selectedItem);
+    this.modalCreateCommonPhrase.showModalCreateFromAnalysis(this.documentInfo.announcementCode, selectedItem, true);
   }
 
   setStyleHighlight(selectedItem: any){
@@ -114,7 +122,7 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
     let words = selectedItem.highlight[0].my_uncommon_words.filter(word => word.alerta != "None"); 
     words.forEach(word => {
       var regEx = new RegExp(word.similar_word, "ig");
-      text = text.replaceAll(regEx, '<span class=" badge-'+word.alerta+'">'+word.similar_word+'</span>');
+      text = text.replaceAll(regEx, '<span class="badge badge-'+word.alerta+'">'+word.similar_word+'</span>');
     });
 
     selectedItem.highlight[0].common_words.forEach(word => {
