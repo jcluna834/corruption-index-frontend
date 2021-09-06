@@ -15,6 +15,7 @@
               <thead class="thead-light">
                 <tr>
                   <th>ID</th>
+                  <th>Tipo análisis</th>
                   <th>Fecha</th>
                   <th style="width: 15%;">Ver</th>
                 </tr>
@@ -22,6 +23,7 @@
               <tbody>
                 <tr *ngFor="let row of reportsItems">
                   <td>{{row.id}}</td>
+                  <td>{{row.AnalysisType}}</td>
                   <td>{{row.AnalysisDate}}</td>
                   <td>
                     <button type="button" class="btn btn-primary"

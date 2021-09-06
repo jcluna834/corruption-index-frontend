@@ -30,10 +30,11 @@ export class ModalSimilarityAnalisisListComponent implements OnInit {
   async getReports(documentID: any){
     const lstReports = await this.plagiarismDetectionService.getReportsSimilarityByDocumentId(documentID);
     if(lstReports){
-      this.reportsItems = lstReports.data.map(x =>{
+      this.reportsItems = lstReports.data.data.map(x =>{
         return{
-          id: x._id,
-          AnalysisDate: x.AnalysisDate,
+          id: x.collectionCode,
+          AnalysisDate: x.created_date,
+          AnalysisType: x.AnalysisType
         }
       })
     }

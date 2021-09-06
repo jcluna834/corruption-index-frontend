@@ -21,7 +21,6 @@ export class DocumentManagerService {
             for (var key in data) {
                 formData.append(key, data[key]);
             }
-            console.log(formData);
             const response: any = await this.httpClient.post(this.UrlPlagiarismDetectionServices + 'uploadFile', formData).toPromise();
             return response;
         }

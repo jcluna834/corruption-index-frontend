@@ -93,6 +93,8 @@ export class DocumentListComponent implements OnInit {
           createdDate: x.created_date,
           documentName: x.title,
           announcementName: x.announcementName,
+          AnalysisType: x.AnalysisType,
+          AnalysisTypeDesc: x.AnalysisTypeDesc,
           status: x.status
         }
       })
@@ -112,7 +114,7 @@ export class DocumentListComponent implements OnInit {
 
   modalAnalisis(selectedItem: any){
     this.document = selectedItem;
-    const message = "Está a puntio de iniciar el análisis de similitud de documentos, esto puede tardar varios minutos, un correo se le enviará cuando el proceso termine"
+    const message = "Está a punto de iniciar el análisis de similitud de documentos, esto puede tardar varios minutos, un correo se le enviará cuando el proceso termine"
     this.showModalConfirm("Iniciar Análisis de similitud", message, '', false, false, true);
   }
 

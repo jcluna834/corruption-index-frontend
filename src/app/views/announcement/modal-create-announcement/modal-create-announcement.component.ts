@@ -119,7 +119,6 @@ export class ModalCreateAnnouncementComponent implements OnInit {
 
   async createAnnouncement() {
     await this.plagiarismDetectionService.saveAnnouncement(this.announcement).then(response => {
-      console.log(response);
       if (response) {
         if (response.success) {
           this.showModalConfirm("Guardado exitoso", response.message);
@@ -138,7 +137,6 @@ export class ModalCreateAnnouncementComponent implements OnInit {
 
   async updateAnnouncement() {
     await this.plagiarismDetectionService.updateAnnouncement(this.announcement).then(response => {
-      console.log(response);
       if (response) {
         if (response.success) {
           this.showModalConfirm("Edición exitosa", response.message);

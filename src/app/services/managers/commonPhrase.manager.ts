@@ -28,17 +28,6 @@ export class CommonPhraseManagerService {
     }
   }
 
-  /*async getReportsSimilarityByDocumentId(documentID: any): Promise<any>{
-    try{
-      const reports: any = await this.httpClient.get(this.UrlPlagiarismDetectionServices+'getReportsSimilarityByDocumentId/' + documentID).toPromise();
-      return reports
-    }
-    catch(error){
-      console.log(error);
-      return;
-    }
-  }*/
-
   async saveCommonPhrase(data: any): Promise<any>{
     try{
       const response: any = await this.httpClient.post(this.UrlPlagiarismDetectionServices + 'commonPhrase', data).toPromise();

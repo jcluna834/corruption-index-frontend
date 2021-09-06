@@ -396,24 +396,9 @@ export class DocumentComponent implements OnInit, AfterViewInit {
       this.mainChartData2.push(this.random(80, 100));
       this.mainChartData3.push(65);
     }
-
-    this.getReports();
   }
 
   ngAfterViewInit(): void {
   }
 
-  async getReports(){
-    const lstReports = await this.plagiarismDetectionService.getReports();
-    if(lstReports){
-      this.reportsItems = lstReports.data.map(x =>{
-        return{
-          id: x._id,
-          label: x.idTypeDescription,
-          value: x.idTypeID,
-          selected: false,
-        }
-      })
-    }
-  }
 }
