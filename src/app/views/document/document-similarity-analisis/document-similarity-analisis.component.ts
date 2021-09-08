@@ -39,6 +39,7 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
   private minSimilarityQuantity: number = 0;
   private umbralSimilarity: number = GlobalConstants.umbral;
   private documentSimilarity: number = 0;
+  private infoTableGlobal: any;
   
   //Variables para reporte global
   private routeSub: Subscription;
@@ -145,6 +146,13 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
         similarity_percentage_acum += similarity_percentage
       })
     this.documentSimilarity = +(similarity_percentage_acum/this.paragraphLenght).toFixed(2);
+
+    this.infoTableGlobal = [
+      {range:"Mayor o igual a " + GlobalConstants.maxSimilarity + "%", quantity:this.maxSimilarityQuantity},
+      {range:"Entre " + GlobalConstants.middleSimilarity + "% y " + GlobalConstants.umbral + "%", quantity:this.middleMaxSimilarityQuantity},
+      {range:"Entre " + GlobalConstants.umbral + "% y " + GlobalConstants.middleSimilarity + "%", quantity:this.middleMinSimilarityQuantity},
+      {range:"Menor a " + GlobalConstants.umbral + "%", quantity:this.minSimilarityQuantity},
+    ]
   }
 
   async getReportAnalysisInfo(){
