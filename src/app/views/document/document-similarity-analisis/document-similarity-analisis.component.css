@@ -10,3 +10,8 @@
     border-left: 4px solid #f73c3c;
 }
 
+.text-value-number{
+    font-size: 1.8125rem !important;
+    font-weight: 600;
+}
+

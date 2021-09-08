@@ -9,6 +9,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ComfirmPopupComponent } from '../../comfirm-popup/comfirm-popup.component';
 import { SimilarDocument } from '../../../models/similarDocument';
 import { ReportAnalysis } from '../../../models/reportAnalysis';
+import { GlobalConstants } from '../../../common/global-constants';
 
 
 @Pipe({name: 'functionCaller'})
@@ -29,6 +30,17 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
   @ViewChild('modalCreateCommonPhrase', { static: false })
   modalCreateCommonPhrase: ModalCreateCommonPhraseComponent;
 
+  //Variables para reporte global
+  private paragraphLenght: number = 0;
+  private tokensQuantity: number = 0;
+  private maxSimilarityQuantity: number = 0;
+  private middleMaxSimilarityQuantity: number = 0;
+  private middleMinSimilarityQuantity: number = 0;
+  private minSimilarityQuantity: number = 0;
+  private umbralSimilarity: number = GlobalConstants.umbral;
+  private documentSimilarity: number = 0;
+  
+  //Variables para reporte global
   private routeSub: Subscription;
   private myStyle: SafeHtml;
   public bsModalRef: BsModalRef;
@@ -86,6 +98,8 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
     await this.getDocumentInfo(this.infoReport.documentID);
     this.documentTitle = this.documentInfo.title;
     this.getSimilarDocs();
+    //Se contruye reporte global
+    this.buildGlobalReport();
   }
 
   async ngAfterViewInit() {
@@ -108,6 +122,29 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
         }
       })
     }
+  }
+
+  buildGlobalReport(){
+    let similarity_percentage_acum = 0;
+    this.paragraphLenght = this.infoReport.response_elastic.length;
+    this.infoReport.response_elastic
+      .filter(x => x.status == 0)
+      .map(x =>{
+        //Se arma reporte de cantidad por umbral this.umbralSimilarity
+        const similarity_percentage = x.highlight[0].phrase_similarity_percentage;
+        if(similarity_percentage >= GlobalConstants.maxSimilarity){
+          this.maxSimilarityQuantity ++;
+        }else if(similarity_percentage >= GlobalConstants.middleSimilarity && similarity_percentage < GlobalConstants.maxSimilarity){
+          this.middleMaxSimilarityQuantity ++;
+        }else if(similarity_percentage >= GlobalConstants.umbral && similarity_percentage < GlobalConstants.middleSimilarity){
+          this.middleMinSimilarityQuantity ++;
+        }else{
+          this.minSimilarityQuantity ++;
+        }
+        this.tokensQuantity += x.highlight[0].my_words.length
+        similarity_percentage_acum += similarity_percentage
+      })
+    this.documentSimilarity = +(similarity_percentage_acum/this.paragraphLenght).toFixed(2);
   }
 
   async getReportAnalysisInfo(){

@@ -38,10 +38,10 @@ export class DocumentListComponent implements OnInit {
     private modalService: BsModalService,
     private router: Router) {
     this.document = new Document();
-   }
+  }
 
   public docsItems: any;
-  public analysisHistoryItems: any;
+  public analysisHistoryItems: any; 
 
   /*ngOnInit(): void {
     this.getDocuments();
