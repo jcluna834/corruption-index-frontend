@@ -167,7 +167,7 @@ export class DocumentListComponent implements OnInit {
 
   async executeSimilarityAnalisis(){
     this.plagiarismDetectionService.executeSimilarityAnalisis(this.document);
-    location.reload();
+    setInterval(function(){ location.reload(); }, 1000);
   }
 
   showModalConfirm(title, msg, modalType='', reload=false, hiddeBtnCancel=true, isAnalysis=false) {

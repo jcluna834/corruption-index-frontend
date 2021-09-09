@@ -176,31 +176,36 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
 
   setStyleHighlight(selectedItem: any){
     let text = selectedItem.highlight[0].content;
-    let words = selectedItem.highlight[0].my_uncommon_words.filter(word => word.alerta != "None"); 
-    words.forEach(word => {
-      var regEx = new RegExp(word.uncommon_word, "ig");
-      text = text.replaceAll(regEx, '<span class="badge badge-'+word.alerta+'">'+word.uncommon_word+'</span>');
-    });
-
-    selectedItem.highlight[0].common_words.forEach(word => {
-      var regEx = new RegExp(word, "ig");
-      text = text.replaceAll(regEx, '<span class="badge badge-rojo">'+word+'</span>');
-    });
+    if(text != ""){
+      let words = selectedItem.highlight[0].my_uncommon_words.filter(word => word.alerta != "None"); 
+      words.forEach(word => {
+        var regEx = new RegExp(word.uncommon_word, "ig");
+        text = text.replaceAll(regEx, '<span class="badge badge-'+word.alerta+'">'+word.uncommon_word+'</span>');
+      });
+  
+      selectedItem.highlight[0].common_words.forEach(word => {
+        var regEx = new RegExp(word, "ig");
+        text = text.replaceAll(regEx, '<span class="badge badge-rojo">'+word+'</span>');
+      });
+    }
     return text;
   }
 
   setStyleParragraph(selectedItem: any){
     let text = selectedItem.paragraph_text;
-    let words = selectedItem.highlight[0].my_uncommon_words.filter(word => word.alerta != "None"); 
-    words.forEach(word => {
-      var regEx = new RegExp(word.similar_word, "ig");
-      text = text.replaceAll(regEx, '<span class="badge badge-'+word.alerta+'">'+word.similar_word+'</span>');
-    });
-
-    selectedItem.highlight[0].common_words.forEach(word => {
-      var regEx = new RegExp(word, "ig");
-      text = text.replaceAll(regEx, '<span class="badge badge-rojo">'+word+'</span>');
-    });
+    let content = selectedItem.highlight[0].content;
+    if(content != ""){
+      let words = selectedItem.highlight[0].my_uncommon_words.filter(word => word.alerta != "None"); 
+      words.forEach(word => {
+        var regEx = new RegExp(word.similar_word, "ig");
+        text = text.replaceAll(regEx, '<span class="badge badge-'+word.alerta+'">'+word.similar_word+'</span>');
+      });
+  
+      selectedItem.highlight[0].common_words.forEach(word => {
+        var regEx = new RegExp(word, "ig");
+        text = text.replaceAll(regEx, '<span class="badge badge-rojo">'+word+'</span>');
+      });
+    }
     return text;
   }
 
