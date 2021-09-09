@@ -123,7 +123,7 @@ export class DocumentListComponent implements OnInit {
     await this.documentManagerService.indexDocument(this.document).then(response => {
       if (response) {
         if (response.status_code === 200) {
-          this.showModalConfirm("Indexado exitoso", response.message, '');
+          this.showModalConfirm("Indexado exitoso", response.message, '', true);
         }
         else{
           this.showModalConfirm("Error al indexar", response.message, "danger");
