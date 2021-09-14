@@ -32,6 +32,7 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
 
   //Variables para reporte global
   private paragraphLenght: number = 0;
+  private paragraphSimilarityLenght: number = 0;
   private tokensQuantity: number = 0;
   private maxSimilarityQuantity: number = 0;
   private middleMaxSimilarityQuantity: number = 0;
@@ -112,7 +113,7 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
     if(this.infoReport.response_elastic){
       this.reportsES = 
       this.infoReport.response_elastic
-      .filter(x => x.status == 0)
+      .filter(x => x.status == 0 && x.highlight[0].phrase_similarity_percentage > 0)
       .map(x =>{
         return{
           collectionId: this.reportID,
@@ -133,6 +134,8 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
       .map(x =>{
         //Se arma reporte de cantidad por umbral this.umbralSimilarity
         const similarity_percentage = x.highlight[0].phrase_similarity_percentage;
+        if(similarity_percentage>0) this.paragraphSimilarityLenght ++;
+
         if(similarity_percentage >= GlobalConstants.maxSimilarity){
           this.maxSimilarityQuantity ++;
         }else if(similarity_percentage >= GlobalConstants.middleSimilarity && similarity_percentage < GlobalConstants.maxSimilarity){

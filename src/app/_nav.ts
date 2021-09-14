@@ -27,7 +27,7 @@ export const navItems: INavData[] = [
     url: '/document',
     icon: 'icon-docs'
   },
-  {
+  /*{
     name: 'Typography',
     url: '/theme/typography',
     icon: 'icon-pencil'
@@ -255,5 +255,5 @@ export const navItems: INavData[] = [
     icon: 'icon-layers',
     variant: 'danger',
     attributes: { target: '_blank', rel: 'noopener' }
-  }
+  }*/
 ];
