@@ -62,8 +62,8 @@ export class ModalCreateCommonPhraseComponent implements OnInit {
     this.clearForm();
     this.announcementID = announcementID;
     this.announcementCode.setValue(this.announcementID);
-    //this.phrase.setValue(content.paragraph_text)
-    this.phrase.setValue(content.highlight[0].content)
+    this.phrase.setValue(content.paragraph_text)
+    //this.phrase.setValue(content.highlight[0].content)
     this.editJson = flag
     this.reportsES = content
     this.commonPhraseModal.show();
