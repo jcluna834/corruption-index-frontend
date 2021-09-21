@@ -14,6 +14,10 @@ import { DocumentListComponent } from './document-list/document-list.component';
 import { DocumentSimilarityAnalisisComponent, FunctionCallerPipe } from './document-similarity-analisis/document-similarity-analisis.component';
 import { ModalSimilarityAnalisisListComponent } from './modal-similarity-analisis-list/modal-similarity-analisis-list.component';
 import { AnnouncementModule } from './../announcement/announcement.module';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   imports: [
@@ -26,7 +30,11 @@ import { AnnouncementModule } from './../announcement/announcement.module';
     ModalModule.forRoot(),
     AlertModule.forRoot(),
     ReactiveFormsModule,
-    AnnouncementModule
+    AnnouncementModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   declarations: [ 
     DocumentComponent, 

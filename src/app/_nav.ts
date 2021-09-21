@@ -11,19 +11,19 @@ export const navItems: INavData[] = [
     icon: 'icon-drawer',
     children: [
       {
-        name: 'List',
+        name: 'Lista',
         url: '/announcement/list',
         icon: 'icon-drawer'
       },
       {
-        name: 'Common Phrase',
+        name: 'Frases comunes',
         url: '/announcement/commonPhrases',
         icon: 'icon-speech'
       }
     ]
   },
   {
-    name: 'Documentos',
+    name: 'Propuestas',
     url: '/document',
     icon: 'icon-docs'
   },

@@ -22,7 +22,7 @@ export class ModalCreateDocumentComponent implements OnInit {
   public bsModalRef: BsModalRef;
   public announcementItems: any;
   public option: string = "Save";
-  public titleModal: string = "Crear una convocatoria";
+  public titleModal: string = "Crear una propuesta";
 
   constructor(
     private fb: FormBuilder,
@@ -51,13 +51,13 @@ export class ModalCreateDocumentComponent implements OnInit {
 
   showModalCreate(){
     this.option = "Save";
-    this.titleModal = "Crear una convocatoria";
+    this.titleModal = "Crear una propuesta";
     this.clearForm();
     this.documentModal.show();
   }
 
   showModalEdit() {
-    this.titleModal = "Editar una convocatoria";
+    this.titleModal = "Editar una propuesta";
     this.option = "Update";
     this.documentModal.show();
   }

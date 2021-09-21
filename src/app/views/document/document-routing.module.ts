@@ -8,7 +8,7 @@ const routes: Routes = [
   {
     path: '',
     data: {
-      title: 'Documents'
+      title: 'Propuestas'
     },
     children: [
       {
@@ -20,14 +20,14 @@ const routes: Routes = [
         path: 'list',
         component: DocumentComponent,
         data: {
-          title: 'list'
+          title: 'Lista'
         }
       },
       {
         path: 'similarityAnalysis/:id',
         component: DocumentSimilarityAnalisisComponent,
         data: {
-          title: 'similarityAnalysis'
+          title: 'Análisis de similitud'
         }
       }
     ]

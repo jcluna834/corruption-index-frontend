@@ -8,7 +8,20 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ComfirmPopupComponent } from '../../comfirm-popup/comfirm-popup.component';
 import { interval, Subscription, timer } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from "@angular/material/table";
 
+export interface DocumentElement {
+  status: number;
+  title: string;
+  id: string;
+  description: string;
+  announcementName: string;
+  fileName: string;
+  options: string;
+  analysis: string;
+}
 
 @Component({
   selector: 'app-document-list',
@@ -22,15 +35,19 @@ export class DocumentListComponent implements OnInit {
 
   @ViewChild('modalAnalysisList', { static: false })
   modalAnalysisList: ModalSimilarityAnalisisListComponent;
+  
+  @ViewChild('paginator', { static: false })
+  paginator: MatPaginator;
 
-  //@Output() documentSimilarityAnalisis: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild(MatSort) sort: MatSort;
 
   public timerSubscription: Subscription;
 
   public document: Document;
   public bsModalRef: BsModalRef;
   public downloadFIileURL: string = "http://localhost:5000/api/v1/plagiarism/downloadFile/";
-
+  public dataSource: any;
+  public displayedColumns: string[];
 
   constructor(
     private documentManagerService: DocumentManagerService,
@@ -38,15 +55,11 @@ export class DocumentListComponent implements OnInit {
     private modalService: BsModalService,
     private router: Router) {
     this.document = new Document();
+    this.dataSource = new MatTableDataSource<DocumentElement>();
   }
 
   public docsItems: any;
   public analysisHistoryItems: any; 
-
-  /*ngOnInit(): void {
-    this.getDocuments();
-    this.getAnalysisHistory();
-  }*/
 
   ngOnInit(): void {
     this.getDocuments();
@@ -55,13 +68,24 @@ export class DocumentListComponent implements OnInit {
     const source = interval(30000); //30 seconds
     this.timerSubscription = source.subscribe(val => this.getAnalysisHistory());
   }
+
+  ngAfterViewInit() {
+    this.paginator._intl.itemsPerPageLabel="Elementos por página";
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
   
   ngOnDestroy(): void {
     this.timerSubscription.unsubscribe();
   }
 
-  loadData(){
-    console.log("entro");
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   async getDocuments(){
@@ -80,6 +104,12 @@ export class DocumentListComponent implements OnInit {
         }
       })
     }
+    
+    //Lógica para aplicar datatable en la tabla
+    this.dataSource = new MatTableDataSource(this.docsItems);
+    this.displayedColumns = ['status', 'title', 'description', 'announcementName', 'options', 'analysis'];
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   async getAnalysisHistory(){
