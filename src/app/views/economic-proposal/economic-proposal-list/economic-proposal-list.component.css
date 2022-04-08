@@ -1,0 +1,32 @@
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+td,
+th {
+    width: 25%;
+}
+
+.table .thead-light th {
+    color: #5c6873;
+    background-color: #e4e7ea;
+    border-color: #c8ced3;
+}
+
+.mat-option:last-child:before{
+    content:'all';
+    background:green;
+    font-size: inherit;
+    line-height: 3em;
+    height: 3em;
+}
+
+.mat-option:last-child .mat-option-text {
+    display: none;
+    position: relative;
+}

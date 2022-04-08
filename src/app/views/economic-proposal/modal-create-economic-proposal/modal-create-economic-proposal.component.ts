@@ -4,16 +4,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Document } from './../../../models/document';
 import { DocumentManagerService } from './../../../services/managers/document.manager';
 import { PlagiarismDetectionManagerService } from './../../../services/managers/plagiarism-detection.manager';
+import { BidRiggingManagerService } from './../../../services/managers/bidRigging.manager';
 import { GlobalConstants } from '../../../common/global-constants';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ComfirmPopupComponent } from '../../comfirm-popup/comfirm-popup.component';
 
 @Component({
-  selector: 'app-modal-create-document',
-  templateUrl: './modal-create-document.component.html',
-  styleUrls: ['./modal-create-document.component.css']
+  selector: 'app-modal-create-economic-proposal',
+  templateUrl: './modal-create-economic-proposal.component.html',
+  styleUrls: ['./modal-create-economic-proposal.component.css']
 })
-export class ModalCreateDocumentComponent implements OnInit {
+export class ModalCreateEconomicProposalComponent implements OnInit {
 
   @ViewChild('documentModal') public documentModal: ModalDirective;
 
@@ -29,6 +30,7 @@ export class ModalCreateDocumentComponent implements OnInit {
     private documentManagerService: DocumentManagerService,
     private modalService: BsModalService,
     private plagiarismDetectionService: PlagiarismDetectionManagerService,
+    private bidRiggingManagerService: BidRiggingManagerService,
   ) {
 
     this.document = new Document();
@@ -112,7 +114,7 @@ export class ModalCreateDocumentComponent implements OnInit {
   setDocument() {
     this.document.title = this.title.value;
     this.document.announcementCode = this.announcementCode.value;
-    this.document.documentType = 1 //ID documentType: Technical;
+    this.document.documentType = 2 //ID documentType: Economic;
     this.document.description = this.description.value;
     //TO-DO Obtener el Id del usuario
     this.document.responsibleCode = GlobalConstants.responsibleCode;
@@ -141,7 +143,7 @@ export class ModalCreateDocumentComponent implements OnInit {
   }
 
   async createDocument() {
-    await this.documentManagerService.uploadFile(this.document).then(response => {
+    await this.bidRiggingManagerService.uploadFile(this.document).then(response => {
       if (response) {
         if (response.status_code === 201) {
           this.showModalConfirm("Guardado exitoso", response.message);
@@ -154,7 +156,7 @@ export class ModalCreateDocumentComponent implements OnInit {
       }
     }).catch(error => {
       console.log(error);
-      this.showModalConfirm("Error al guardar", "Hubo un problema al guardar la propuesta técnica", "danger");
+      this.showModalConfirm("Error al guardar", "Hubo un problema al guardar la propuesta económica", "danger");
     })
   }
 
@@ -200,5 +202,4 @@ export class ModalCreateDocumentComponent implements OnInit {
       }
     );
   }
-
 }

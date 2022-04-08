@@ -1,0 +1,92 @@
+<!-- Modal crear documento -->
+<app-modal-create-economic-proposal #modalCreateDocument></app-modal-create-economic-proposal>
+
+<div class="card">
+  <div class="card-header">
+    Propuestas
+  </div>
+  <div class="card-body">
+    <div style="padding-bottom: 20px;">
+      <button type="button" class="btn btn-info" (click)="addDocumnent()">Subir Propuesta</button>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Buscar" (keyup)="applyFilter($event)">
+        </div>
+      </div>
+    </div>
+    
+    <table mat-table [dataSource]="dataSource" matSort class="table table-responsive-sm table-hover table-outline mb-0">
+      <!-- status Column -->
+      <ng-container matColumnDef="status" >
+        <th class="text-center" mat-header-cell *matHeaderCellDef  style="width: 5%;"><i class="cui-file icons font-2xl "></i></th>
+        <td mat-cell *matCellDef="let element" class="text-center" style="width: 5%;">
+          <div class="avatar">
+            <img src="assets/img/avatars/sheet-icon.ico" class="img-avatar">
+            <span *ngIf="element.status == 0" class="avatar-status badge-warning" title="Documento subido"></span>
+            <span *ngIf="element.status == 1" class="avatar-status badge-info" title="Documento analizado"></span>
+            <span *ngIf="element.status == 2" class="avatar-status badge-success" title="Documento indexado"></span>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- title Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+        <td mat-cell *matCellDef="let element">
+          <div>{{element.title}}</div>
+          <div class="small text-muted">
+            <span>{{element.id}}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Descripción Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
+        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+      </ng-container>
+
+      <!-- announcementName Column -->
+      <ng-container matColumnDef="announcementName">
+        <th mat-header-cell *matHeaderCellDef  mat-sort-header> Convocatoria </th>
+        <td mat-cell *matCellDef="let element"> {{element.announcementName}} </td>
+      </ng-container>
+
+      <!-- options Column -->
+      <ng-container matColumnDef="options">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 15%;"> Opciones </th>
+        <td mat-cell *matCellDef="let element" style="width: 15%;">
+          <a type="button" class="btn btn-success" title="Descargar" href="{{downloadFIileURL + element.fileName }}" download><span class="icon-cloud-download"></span></a>
+          <button type="button" class="btn btn-info" (click)="editDocument(element)" title="Editar"><span class="icon-pencil"></span></button>
+          <button type="button" class="btn btn-danger" (click)="deleteDocument(element)" title="Eliminar"><span class="icon-trash"></span></button>
+        </td>
+      </ng-container>
+
+      <!-- analysis Column -->
+      <ng-container matColumnDef="analysis">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 15%;"> Análisis </th>
+        <td mat-cell *matCellDef="let element" style="width: 15%;">
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="thead-light"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="thead-light"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="6">No hay propuestas relacionadas a la búsqueda </td>
+      </tr>
+
+    </table>
+
+    <mat-paginator 
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      showFirstLastButtons
+      #paginator>
+    </mat-paginator>
+
+  </div>
+</div>

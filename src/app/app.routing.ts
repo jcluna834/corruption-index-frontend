@@ -86,6 +86,10 @@ export const routes: Routes = [
       {
         path: 'announcement',
         loadChildren: () => import('./views/announcement/announcement.module').then(m => m.AnnouncementModule)
+      },
+      {
+        path: 'economicProposal',
+        loadChildren: () => import('./views/economic-proposal/economic-proposal.module').then(m => m.EconomicProposalModule)
       }
     ]
   },

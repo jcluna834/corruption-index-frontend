@@ -10,6 +10,7 @@ export class Document {
     public author?: string,
     public responsibleCode?: number,
     public announcementCode?: number,
+    public documentType?: number,
     public fileInput?: FileList,
     public indexDoc?: number,
     public status?: number,

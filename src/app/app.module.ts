@@ -44,6 +44,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 import { DocumentModule } from './views/document/document.module';
+import { EconomicProposalModule } from './views/economic-proposal/economic-proposal.module';
 
 @NgModule({
   imports: [
@@ -62,6 +63,7 @@ import { DocumentModule } from './views/document/document.module';
     HttpClientModule,
     CommonModule,
     DocumentModule,
+    EconomicProposalModule,
     FormsModule,
     ReactiveFormsModule,
   ],

@@ -17,7 +17,7 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: 'list',
+        path: 'technical',
         component: DocumentComponent,
         data: {
           title: 'Lista'

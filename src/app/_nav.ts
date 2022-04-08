@@ -24,9 +24,21 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Propuestas',
-    url: '/document',
-    icon: 'icon-docs'
+    icon: 'icon-drawer',
+    children: [
+      {
+        name: 'Técnicas',
+        url: '/document/technical',
+        icon: 'icon-docs'
+      },
+      {
+        name: 'Económicas',
+        url: '/economicProposal/economics',
+        icon: 'icon-docs'
+      }
+    ]
   },
+
   /*{
     name: 'Typography',
     url: '/theme/typography',

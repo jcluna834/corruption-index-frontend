@@ -1,7 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import { PlagiarismDetectionManagerService } from './../../services/managers/plagiarism-detection.manager';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DocumentListComponent } from './document-list/document-list.component';
 
 @Component({
@@ -13,11 +10,8 @@ export class DocumentComponent implements OnInit {
   @ViewChild('documentList', { static: false })
   documentList: DocumentListComponent;
 
-  constructor( private plagiarismDetectionService: PlagiarismDetectionManagerService ) {
+  constructor() {
   }
-
-  public reportsItems: any;
-  public docsItems: any;
 
   ngOnInit(): void {
   }
