@@ -1,13 +1,24 @@
 <!-- Modal crear documento -->
 <app-modal-create-economic-proposal #modalCreateDocument></app-modal-create-economic-proposal>
 
+<!-- Modal Lista de reportes -->
+<app-modal-bidRigging-analisis-list #modalAnalysisList></app-modal-bidRigging-analisis-list>
+
 <div class="card">
   <div class="card-header">
     Propuestas
   </div>
-  <div class="card-body">
-    <div style="padding-bottom: 20px;">
-      <button type="button" class="btn btn-info" (click)="addDocumnent()">Subir Propuesta</button>
+  <div class="card-body" [hidden]="!showList">
+    <div *ngIf="showConfirmMsg">
+      <alert type="info">
+        <h4 class="alert-heading">¡El análisis de manipulación de ofertas terminó exitosamente!</h4>
+      </alert>
+    </div>
+
+    <div class="block_container">
+      <div class="blocks"><button type="button" class="btn btn-info" (click)="addDocumnent()"><span class="icon-cloud-upload"></span> Subir Propuesta</button></div>  
+      <div *ngIf="showBtnsAnalysis" class="blocks"><button type="button" class="btn btn-success" (click)="modalAnalisis()"><span class="icon-list"></span> Ejecutar análisis</button></div>  
+      <div *ngIf="showBtnsAnalysis" class="blocks"><button type="button" class="btn btn-warning" (click)="showModalListAnalysis()"><span class="icon-magnifier"></span> Ver análisis</button></div>
     </div>
 
     <div class="row">
@@ -65,13 +76,6 @@
         </td>
       </ng-container>
 
-      <!-- analysis Column -->
-      <ng-container matColumnDef="analysis">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 15%;"> Análisis </th>
-        <td mat-cell *matCellDef="let element" style="width: 15%;">
-        </td>
-      </ng-container>
-
       <tr mat-header-row *matHeaderRowDef="displayedColumns" class="thead-light"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="thead-light"></tr>
 
@@ -85,6 +89,7 @@
     <mat-paginator 
       [pageSizeOptions]="[5, 10, 25, 100]"
       showFirstLastButtons
+      itemsPerPageLabel = "Elemetos por página"
       #paginator>
     </mat-paginator>
 

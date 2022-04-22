@@ -1,0 +1,29 @@
+.list-group-item-accent-amarillo {
+    border-left: 4px solid #fffb07;
+}
+
+.list-group-item-accent-naranja {
+    border-left: 4px solid #ec994b;
+}
+
+.list-group-item-accent-rojo {
+    border-left: 4px solid #f73c3c;
+}
+
+.text-value-number{
+    font-size: 1.8125rem !important;
+    font-weight: 600;
+}
+
+.report-body {
+    min-height: 11em;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+
+@media only screen and ( max-width: 1415px ){
+    .report-body {
+        height: 14em;
+    }
+}

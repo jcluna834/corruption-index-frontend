@@ -1,0 +1,95 @@
+<div [innerHtml]="myStyle"></div>
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <strong>Tipo de análisis: </strong><br/>
+          </div>
+          <div>
+            Análisis de la propuesta: <strong>{{announcementName}}</strong>
+          </div>
+          <div>
+            Fecha de análsis: <strong>{{reportDate}}</strong>
+          </div>
+        </div>
+        <div class="card-body">
+          <h2>Medidas generales del total de la convocatoria</h2>
+          <div class="row">
+            <div class="col-sm-6 col-lg-3">
+              <div class="card text-white bg-info">
+                <div class="report-body mt-2 mx-2">
+                  <div class="text-value">Coeficiente de variación</div>
+                  <div class="text-value-number">{{reportTotals.VariationCoeff}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="card text-white bg-primary">
+                <div class="report-body mt-2 mx-2">
+                  <div class="text-value">Kurtosis</div>
+                  <div class="text-value-number">{{reportTotals.KurtosisCoeff}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="card text-white bg-warning">
+                <div class="report-body mt-2 mx-2">
+                  <div class="text-value">Diferencia porcentual</div>
+                  <div class="text-value-number">{{reportTotals.PercentageDifference}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="card text-white bg-danger">
+                <div class="report-body mt-2 mx-2">
+                  <div class="text-value">Diferencia relativa norm</div>
+                  <div class="text-value-number">{{reportTotals.NormalizeRelativeDifference}} %</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!--Tabla de reporte por producto-->
+          <h2>Medidas por cada producto de la convocatoria</h2>
+          <div class="row">
+            <div class="col-sm-12 col-lg-12">
+              <table class="table table-responsive-sm table-hover table-outline mb-0">
+                <thead class="thead-light">
+                  <tr>
+                    <th>ID Prodcuto</th>
+                    <th>Nombre Prodcuto</th>
+                    <th>Máximo</th>
+                    <th>Mínimo</th>
+                    <th>Promedio</th>
+                    <th>CV</th>
+                    <th>Curtosis</th>
+                    <th>Diff porcentual</th>
+                    <th>Diff relativa</th>
+                    <th>Diff relativa norm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of reportProducts">
+                    <td >{{row.PROD_ID}}</td>
+                    <td>{{row.PROD_NAME}}</td>
+                    <td>{{row.MAX}}</td>
+                    <td>{{row.MIN}}</td>
+                    <td>{{row.AVG}}</td>
+                    <td>{{row.VariationCoeff}}</td>
+                    <td>{{row.KurtosisCoeff}}</td>
+                    <td>{{row.PercentageDifference}}</td>
+                    <td>{{row.RelativeDifference}}</td>
+                    <td>{{row.NormalizeRelativeDifference}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

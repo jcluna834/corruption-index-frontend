@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { GlobalConstants } from "../../common/global-constants";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: "root",
@@ -13,10 +13,11 @@ export class BidRiggingManagerService {
       GlobalConstants.apiURLBidRiggingDetection;
   }
 
-  async getDocs(): Promise<any> {
+  async getDocs(announcementCode: any): Promise<any> {
     try {
+      let params = new HttpParams().set('announcementCode', announcementCode);
       const reports: any = await this.httpClient
-        .get(this.UrlBidRiggingDetectionServices + "documents")
+        .get(`${this.UrlBidRiggingDetectionServices}documents`, { params: params } )
         .toPromise();
       return reports;
     } catch (error) {
@@ -37,6 +38,51 @@ export class BidRiggingManagerService {
         .toPromise();
       return response;
     } catch (error) {
+      console.log(error);
+      return;
+    }
+  }
+
+  async executeBidRiggingAnalisis(data: any): Promise<any> {
+    try {
+      const response: any = await this.httpClient.post(`${this.UrlBidRiggingDetectionServices}detect/executeBidRiggingAnalisis`, data).toPromise();
+      return response;
+    }
+    catch (error) {
+      console.log(error);
+      return;
+    }
+  }
+
+  async getReportsBidRiggingByAnnouncement(announcementCode: any): Promise<any> {
+    try {
+      const reports: any = await this.httpClient.get(`${this.UrlBidRiggingDetectionServices}detect/getReportsBidRiggingByAnnouncement/${announcementCode}`).toPromise();
+      return reports
+    }
+    catch (error) {
+      console.log(error);
+      return;
+    }
+  }
+  
+
+  async getReportBidRiggingByID(ID: any): Promise<any> {
+    try {
+      const reports: any = await this.httpClient.get(`${this.UrlBidRiggingDetectionServices}detect/getReport/${ID}`).toPromise();
+      return reports
+    }
+    catch (error) {
+      console.log(error);
+      return;
+    }
+  }
+
+  async getAnnouncementInfo(ID: any): Promise<any> {
+    try {
+      const reports: any = await this.httpClient.get(`${this.UrlBidRiggingDetectionServices}getAnnouncementInfo/${ID}`).toPromise();
+      return reports
+    }
+    catch (error) {
       console.log(error);
       return;
     }

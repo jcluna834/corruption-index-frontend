@@ -16,6 +16,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { BidRiggingAnalisisComponent } from './economic-bidRigging-analisis/economic-bidRigging-analisis.component';
+import { ModalBidRiggingAnalisisListComponent } from './modal-bidRigging-analisis-list/modal-bidRigging-analisis-list.component';
 
 @NgModule({
   imports: [
@@ -37,11 +39,14 @@ import { MatInputModule } from '@angular/material/input';
   declarations: [ 
     EconomicProposalComponent, 
     ModalCreateEconomicProposalComponent, 
-    EconomicProposalListComponent
+    EconomicProposalListComponent,
+    BidRiggingAnalisisComponent, 
+    ModalBidRiggingAnalisisListComponent,
   ],
   exports : [
     ModalCreateEconomicProposalComponent, 
-    EconomicProposalListComponent
+    EconomicProposalListComponent,
+    BidRiggingAnalisisComponent
   ]
 })
 export class EconomicProposalModule { }

@@ -1,9 +1,21 @@
 <div class="animated fadeIn">
-  
-    <div class="row">
-      <div class="col-md-12">
-        <app-economic-proposal-list #economicProposalList></app-economic-proposal-list>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label for="announcementCode">Convocatoria</label>
+        <select class="form-control" placeholder="Select" 
+          required (change)="onChangeAnnouncement($event.target.value)">
+          <option [value]="null" selected >Seleccione una convocatoria</option>
+          <option [value]="item.id" *ngFor="let item of announcementItems">{{item.name}}</option>
+        </select>
       </div>
     </div>
   </div>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <app-economic-proposal-list #economicProposalList></app-economic-proposal-list>
+    </div>
+  </div>
+</div>
   

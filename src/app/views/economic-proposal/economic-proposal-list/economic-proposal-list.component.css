@@ -30,3 +30,16 @@ th {
     display: none;
     position: relative;
 }
+
+.block_container
+{
+    display: flex;
+    justify-content: left;
+}
+
+.blocks
+{
+    margin-right: 20px;
+    padding-bottom: 20px;
+    display: inline;
+}
