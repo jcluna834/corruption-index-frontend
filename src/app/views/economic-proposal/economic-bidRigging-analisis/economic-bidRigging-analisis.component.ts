@@ -45,6 +45,8 @@ export class BidRiggingAnalisisComponent implements OnInit {
   private announcementInfo: any;
   private reportProducts: any;
   private reportTotals: any;
+  private reportLexRank: any = [];
+  private docsIds: any = [];
   private reportDate: string;
 
   private announcementName: string;
@@ -91,9 +93,9 @@ export class BidRiggingAnalisisComponent implements OnInit {
         return{
           PROD_ID: x.PROD_ID,
           PROD_NAME: x.PROD_NAME,
-          MAX: Math.max(...x.PROD_LIST),
-          MIN: Math.min(...x.PROD_LIST),
-          AVG: this.calculateAVG(x.PROD_LIST),
+          MAX: Math.max(...x.PROD_LIST).toFixed(2),
+          MIN: Math.min(...x.PROD_LIST).toFixed(2),
+          AVG: this.calculateAVG(x.PROD_LIST).toFixed(2),
           VariationCoeff: (x.Anaylis.VariationCoeff * 100).toFixed(2),
           KurtosisCoeff: x.Anaylis.KurtosisCoeff.toFixed(2),
           PercentageDifference:(x.Anaylis.PercentageDifference * 100).toFixed(2),
@@ -103,6 +105,30 @@ export class BidRiggingAnalisisComponent implements OnInit {
       })
       this.reportDate = this.infoReport.AnalysisDate
       this.reportTotals = this.infoReport.totalAnalysis
+      this.infoReport.documentsProbabilityLexRank
+      .map(x =>{
+        this.docsIds.push(x.docId)
+      })
+      
+      const responseDocs = await this.bidRiggingManagerService.getDocsList(this.docsIds);
+      
+      console.log(this.infoReport.documentsProbabilityLexRank)
+      for (var i = 0; i < responseDocs.length; i++) {
+        console.log(responseDocs[i]["documentId"])
+        var probabilityLexRank = 0
+        for (var j = 0; j < this.infoReport.documentsProbabilityLexRank.length; j++) {
+          if(this.infoReport.documentsProbabilityLexRank[i]["docId"] == responseDocs[i]["documentId"]){
+            probabilityLexRank = this.infoReport.documentsProbabilityLexRank[i]["probabilityLexRank"]
+          }
+        }
+        console.log("doc: ", probabilityLexRank)
+
+        this.reportLexRank.push({
+          documentId: responseDocs[i]["documentId"],
+          documentName: responseDocs[i]["title"],
+          probabilityLexRank: probabilityLexRank
+        }) 
+      }
 
       for (var key in this.reportTotals) {
         if(key == "VariationCoeff" || key == "PercentageDifference"){

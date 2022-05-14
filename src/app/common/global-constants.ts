@@ -4,7 +4,7 @@ export class GlobalConstants {
     public static responsibleCode: number = 1;
     public static entityCode: number = 1;
     //Umbral para determinar si una frase va en el reporte
-    public static umbral: number = 30;
+    public static umbral: number = 10;
     public static maxSimilarity: number = 80;
     public static middleSimilarity: number = 50;
 }

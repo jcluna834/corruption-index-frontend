@@ -26,6 +26,22 @@ export class BidRiggingManagerService {
     }
   }
 
+  async getDocsList(documentsIds: any): Promise<any> {
+    try {
+      const data = {
+        docsIds: documentsIds
+      }
+      
+      const reports: any = await this.httpClient
+        .post(`${this.UrlBidRiggingDetectionServices}getDocsList`, data )
+        .toPromise();
+      return reports.data.data;
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  }
+
   async uploadFile(data: any): Promise<any> {
     try {
       const formData = new FormData();

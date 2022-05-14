@@ -102,7 +102,7 @@ export class EconomicProposalListComponent implements OnInit {
     
     //Lógica para aplicar datatable en la tabla
     this.dataSource = new MatTableDataSource(this.docsItems);
-    this.displayedColumns = ['status', 'title', 'description', 'announcementName', 'options'];
+    this.displayedColumns = ['status', 'title', 'description', /*'announcementName',*/ 'options'];
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
