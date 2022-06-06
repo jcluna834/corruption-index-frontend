@@ -48,6 +48,7 @@ export class BidRiggingAnalisisComponent implements OnInit {
   private reportLexRank: any = [];
   private docsIds: any = [];
   private reportDate: string;
+  private probability: any;
 
   private announcementName: string;
 
@@ -80,7 +81,81 @@ export class BidRiggingAnalisisComponent implements OnInit {
     this.announcementName = this.announcementInfo.name;
   }
 
-  async ngAfterViewInit() {
+  ngAfterViewInit() {
+    const prob = this.calculateProbability()
+    this.probability = prob.toFixed(2)
+  }
+
+  calculateProbability() {
+    let kurt = this.reportTotals.KurtosisCoeff
+    switch (true) {
+      case kurt < 0:
+        kurt = 0
+        break
+      case kurt < 2:
+        kurt = 10
+        break
+      case kurt < 5:
+        kurt = 50
+        break
+      case kurt < 10:
+        kurt = 70
+        break
+      case kurt > 10:
+        kurt = 100
+        break
+      default:
+        kurt = 0
+        break
+    }
+
+    let diffNorm = this.reportTotals.NormalizeRelativeDifference
+    switch (true) {
+      case diffNorm < 0:
+        diffNorm = 0
+        break
+      case diffNorm < 1:
+        diffNorm = 10
+        break
+      case diffNorm < 2:
+        diffNorm = 70
+        break
+      case diffNorm > 2:
+        diffNorm = 100
+        break
+      default:
+        diffNorm = 0
+        break
+    }
+
+    let diffPerc = this.reportTotals.PercentageDifference
+    switch (true) {
+      case diffPerc < 1:
+        diffPerc = 10
+        break
+      case diffPerc < 1:
+        diffPerc = 30
+        break
+      case diffPerc < 3:
+        diffPerc = 50
+        break
+      case diffPerc < 5:
+        diffPerc = 100
+        break
+      case diffPerc < 6:
+        diffPerc = 70
+        break
+      case diffPerc < 7:
+        diffPerc = 50
+        break
+      default:
+        diffPerc = 10
+        break
+    }
+
+    let diffRelative = this.reportTotals.RelativeDifference
+
+    return (kurt * 0.3) + (diffPerc * 0.3) + (diffNorm * 0.3) + (diffRelative * 0.1) 
   }
 
   async getReportInfo(){
@@ -112,21 +187,18 @@ export class BidRiggingAnalisisComponent implements OnInit {
       
       const responseDocs = await this.bidRiggingManagerService.getDocsList(this.docsIds);
       
-      console.log(this.infoReport.documentsProbabilityLexRank)
       for (var i = 0; i < responseDocs.length; i++) {
-        console.log(responseDocs[i]["documentId"])
-        var probabilityLexRank = 0
+        var probabilityLexRank = -1
         for (var j = 0; j < this.infoReport.documentsProbabilityLexRank.length; j++) {
-          if(this.infoReport.documentsProbabilityLexRank[i]["docId"] == responseDocs[i]["documentId"]){
-            probabilityLexRank = this.infoReport.documentsProbabilityLexRank[i]["probabilityLexRank"]
+          if(this.infoReport.documentsProbabilityLexRank[j]["docId"] == responseDocs[i]["documentId"]){
+            probabilityLexRank = this.infoReport.documentsProbabilityLexRank[j]["probabilityLexRank"]
           }
         }
-        console.log("doc: ", probabilityLexRank)
 
         this.reportLexRank.push({
           documentId: responseDocs[i]["documentId"],
           documentName: responseDocs[i]["title"],
-          probabilityLexRank: probabilityLexRank
+          probabilityLexRank: (probabilityLexRank * 100).toFixed(2)
         }) 
       }
 

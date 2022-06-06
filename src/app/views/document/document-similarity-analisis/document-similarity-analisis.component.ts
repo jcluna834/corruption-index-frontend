@@ -152,8 +152,8 @@ export class DocumentSimilarityAnalisisComponent implements OnInit {
 
     this.infoTableGlobal = [
       {range:"Mayor o igual a " + GlobalConstants.maxSimilarity + "%", quantity:this.maxSimilarityQuantity},
-      {range:"Entre " + GlobalConstants.middleSimilarity + "% y " + GlobalConstants.umbral + "%", quantity:this.middleMaxSimilarityQuantity},
-      {range:"Entre " + GlobalConstants.umbral + "% y " + GlobalConstants.middleSimilarity + "%", quantity:this.middleMinSimilarityQuantity},
+      {range:"Entre " + GlobalConstants.maxSimilarity + "% y " + GlobalConstants.middleSimilarity + "%", quantity:this.middleMaxSimilarityQuantity},
+      {range:"Entre " + GlobalConstants.middleSimilarity + "% y " + GlobalConstants.umbral + "%", quantity:this.middleMinSimilarityQuantity},
       {range:"Menor a " + GlobalConstants.umbral + "%", quantity:this.minSimilarityQuantity},
     ]
   }

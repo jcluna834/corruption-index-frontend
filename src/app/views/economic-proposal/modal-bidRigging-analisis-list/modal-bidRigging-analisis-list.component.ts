@@ -28,6 +28,7 @@ export class ModalBidRiggingAnalisisListComponent implements OnInit {
   }
 
   async getReports(announcementCode: any){
+    this.reportsItems = []
     const lstReports = await this.bidRiggingManagerService.getReportsBidRiggingByAnnouncement(announcementCode);
     if(lstReports){
       this.reportsItems = lstReports.data.map(x =>{
